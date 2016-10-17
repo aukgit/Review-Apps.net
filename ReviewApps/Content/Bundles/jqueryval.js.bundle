@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<bundle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
+  <settings>
+    <!--Determines if the bundle file should be automatically optimized after creation/update.-->
+    <minify>true</minify>
+    <!--Determin whether to generate/re-generate this bundle on building the solution.-->
+    <runOnBuild>true</runOnBuild>
+    <adjustRelativePaths>true</adjustRelativePaths>
+
+    <!--Specifies a custom subfolder to save files to. By default, compiled output will be placed in the same folder and nested under the original file.-->
+    <outputDirectory>../published.scripts</outputDirectory>
+  </settings>
+  <!--The order of the <file> elements determines the order of the files in the bundle.-->
+  <files>
+    <file>/JavaScript-Mvc-framework/libs/jquery.validate.js</file>
+    <file>/JavaScript-Mvc-framework/libs/ckeditor.js</file>
+    <file>/JavaScript-Mvc-framework/libs/ckeditor-jquery-adapter.js</file>
+    <file>/JavaScript-Mvc-framework/libs/jquery.validate.unobtrusive.js</file>
+    <file>/JavaScript-Mvc-framework/libs/moment.js</file>
+    <file>/JavaScript-Mvc-framework/libs/bootstrap-datetimepicker.js</file>
+    <file>/JavaScript-Mvc-framework/libs/bootstrap-select.js</file>
+    <file>/JavaScript-Mvc-framework/libs/bootstrap-table.js</file>
+    <file>/JavaScript-Mvc-framework/libs/bootstrap-table-filter.js</file>
+    <file>/JavaScript-Mvc-framework/libs/bootstrap-table-export.js</file>
+    <file>/JavaScript-Mvc-framework/libs/Tag-it/bootstrap3-typeahead.min.js</file>
+    <file>/JavaScript-Mvc-framework/libs/Tag-it/bootstrap-tagsinput.js</file>
+    <file>/JavaScript-Mvc-framework/libs/jquery.elastic.source.js</file>
+    <file>/JavaScript-Mvc-framework/libs/DevOrgPlugins/developers-organism.dynamicSelect.js</file>
+    <file>/JavaScript-Mvc-framework/libs/DevOrgPlugins/developers-organism.country-phone.js</file>
+    <file>/JavaScript-Mvc-framework/libs/DevOrgPlugins/jquery.server-validate.js</file>
+    <file>/JavaScript-Mvc-framework/libs/DevOrgPlugins/dev-component-runner.js</file>
+    <file>/JavaScript-Mvc-framework/libs/DevOrgPlugins/WeReviewApps.js</file>
+  </files>
+</bundle>

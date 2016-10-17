@@ -1,0 +1,129 @@
+﻿@import "fonts-rimixens.less";
+@import "animate-refresh.less";
+/*@import "spinner/load1.less";
+@import "spinner/load2.less";
+@import "spinner/load3.less";
+@import "spinner/load4.less";
+@import "spinner/load5.less";
+@import "spinner/load6.less";
+@import "spinner/load7.less";
+@import "spinner/load8.less";*/
+//@import "spinner/load9.less";
+@import "spinner/Signal.less";
+@import "Spinner/loading-bar";
+@import "spinner/top-bar-loading.less"; 
+@import "spinner/fallback.less";  
+
+#loading-bar { 
+    padding-top: 19px;    
+}
+
+.loading-bar-container {
+    min-width: 200px;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+    position: static;
+}
+
+
+.blockMsg {
+    border: none !important;
+    color: rgb(255, 255, 255);
+    border: 3px solid rgb(170, 170, 170);
+    cursor: wait;
+    background-color: rgb(255, 255, 255);
+    border-radius: 4px;
+    position: relative;
+
+    @media(min-width:@screen-md ) {
+        .left(40%) !important;
+        .width(20%) !important;
+    }
+
+    @media(max-width:@screen-sm ) {
+        .left(35%) !important;
+        .width(38%) !important;
+    }
+
+    @media(max-width:@screen-xs ) {
+        .left(6%) !important;
+        .width(84%) !important;
+    }
+
+    .screen-based-font-size(.95em, 1em,1.1em,1.12em,1.18em);
+}
+
+.screen-size-custom-positioning(@sm-right: -2%, @xs-right: -3%, @top-850px: 10px, @top-650px: 15px, @top-400px: 25px ) {
+    @media(max-width:@screen-xs) {
+        right: @xs-right;
+    }
+
+    @media(max-width:@screen-sm) {
+        right: @sm-right;
+    }
+
+
+    @media(max-height: 850px) {
+        .margin-top(@top-850px);
+    }
+
+    @media(max-height: 650px) {
+        .margin-top(@top-650px);
+    }
+
+    @media(max-height: 400px) {
+        .margin-top(@top-400px);
+    }
+}
+
+.spinner-content-style(@position) {
+    right: 0.9%;
+    position: @position;
+    color: black;
+    .ubuntu-font();
+    margin-top: -15px;
+}
+
+.loading-bar-full-screen {
+    height: 100%;
+    position: fixed;
+    z-index: 100000;
+    width: 100%;
+    background-color: #FFFFFF;
+
+    .spinner-content {
+        .margin-top(10px);
+        .text-center;
+        .screen-based-font-size();
+    }
+}
+
+.body-fixed {
+    height: 100%;
+}
+
+.body-flexible {
+    height: 100%;
+    min-height: 100%;
+    overflow: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.default-loading-bar {
+    .min-height(30px);
+    .padding(10px, 20px, 20px, 20px);
+
+    .loading-bar-container {
+        .static;
+        .width(51px);
+        margin: 0 auto;
+    }
+
+    .spinner-content {
+        .spinner-content-style(~'relative');
+        .margin-top(10px);
+        .screen-based-font-size();
+    }
+}

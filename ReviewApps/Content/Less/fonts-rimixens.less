@@ -1,0 +1,112 @@
+﻿@import "remixens/lesshat.less";
+@import "remixens/variables.less";
+
+// fonts modules, not styles
+
+// fonts modules, not styles
+
+
+.default-hyperlink-hover-color() {
+    color: @default-hyperlink-hover-color;
+}
+
+.default-hyperlink-color() {
+    color: @regular-hyperlink-color;
+}
+ 
+.color-inherit() {
+    color: inherit;
+}
+
+.ubuntu-font() {
+    font-family: Ubuntu, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.open-sans-font() {
+    font-family: 'Open Sans';
+}
+
+.ubuntu-light-font() {
+    font-family: UbuntuLight, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.helvetica-font() {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+//important
+.tahoma-font-imp() {
+    font-family: Tahoma, Open sans, Helvetica, Arial, sans-serif !important;
+}
+
+.ubuntu-font-imp() {
+    font-family: Ubuntu, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+
+.open-sans-font-imp() {
+    font-family: 'Open Sans' !important;
+}
+
+.ubuntu-light-font-imp() {
+    font-family: UbuntuLight, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.helvetica-font-imp() {
+    font-family: Helvetica, Arial, sans-serif !important;
+}
+
+.tahoma-font-imp() {
+    font-family: Tahoma, Open sans, Helvetica, Arial, sans-serif !important;
+}
+
+.font(@font-name, @weight, @style){
+    .if-value-present(font-family, @font-name);
+    .if-value-present(font-weight, @weight);
+    .if-value-present(font-style, @style);
+}
+
+
+.font(@weight, @style){
+    .if-value-present(font-weight, @weight);
+    .if-value-present(font-style, @style);
+}
+// without important attribute
+.body-font() {
+    .ubuntu-font;
+}
+
+.form-input-font() {
+    .ubuntu-font;
+}
+
+
+.listitem-font() {
+}
+
+.btn-font() {
+}
+
+.header-font() {
+}
+
+.screen-based-font-size(@default: .95em, @xs-font: 1em, @sm-font: 1.1em, @md-font: 1.3em, @lg-font: 1.3em) {
+    .font-size(@default);
+
+    @media(min-width:@screen-xs) {
+        .font-size(@xs-font);
+    }
+
+    @media(min-width:@screen-sm) {
+        .font-size(@sm-font);
+    }
+
+    @media(min-width:@screen-md) {
+        .font-size(@md-font);
+    }
+
+    @media(min-width:@screen-lg) {
+        .font-size(@lg-font);
+    }
+}
+   

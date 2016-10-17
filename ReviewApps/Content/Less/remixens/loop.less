@@ -1,0 +1,11 @@
+﻿.custom-looping-classes(@className; @attributes; @values; @index) when (@index > 0) {
+  .custom-looping-classes(@className; @attributes; @values; (@index - 1)); // decrement.
+ 
+  @attr  : extract(@attributes, @index);
+  @value : extract(@values, @index);
+ 
+  .@{className}-@{index} {
+     @attr : @value;
+  } 
+} 
+
