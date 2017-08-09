@@ -1363,6 +1363,8 @@
     <Content Include="Views\App\_CommonHiddenForAppEditOrPost.cshtml" />
     <Content Include="Views\App\_SuggestedApps.cshtml" />
     <Content Include="Views\App\_WriteReviewForm.cshtml" />
+    <Content Include="ReviewApps.PublishSettings" />
+    <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Views\Reviews\User.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AnyTypeIconWithHtml.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TextArea.cshtml" />
