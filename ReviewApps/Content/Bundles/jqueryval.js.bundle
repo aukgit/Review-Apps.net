@@ -13,8 +13,6 @@
   <!--The order of the <file> elements determines the order of the files in the bundle.-->
   <files>
     <file>/JavaScript-Mvc-framework/libs/jquery.validate.js</file>
-    <file>/JavaScript-Mvc-framework/libs/ckeditor.js</file>
-    <file>/JavaScript-Mvc-framework/libs/ckeditor-jquery-adapter.js</file>
     <file>/JavaScript-Mvc-framework/libs/jquery.validate.unobtrusive.js</file>
     <file>/JavaScript-Mvc-framework/libs/moment.js</file>
     <file>/JavaScript-Mvc-framework/libs/bootstrap-datetimepicker.js</file>

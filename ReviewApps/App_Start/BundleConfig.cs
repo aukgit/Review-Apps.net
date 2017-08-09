@@ -9,7 +9,7 @@ namespace ReviewApps {
         public static void RegisterBundles(BundleCollection bundles) {
 
 
-            const BundleSelector bundleSelector = BundleSelector.DebugScripts;
+            const BundleSelector bundleSelector = BundleSelector.ReleaseModeBundle;
 
             const string jQueryVersion = "2.2.3";
             const string jsFrameworkFolder = "~/JavaScript-Mvc-framework/";
@@ -102,13 +102,13 @@ namespace ReviewApps {
                         //jsFrameworkFolder + "Prototype/*.*.js",
 
                                 //jsFrameworkFolder + "app.js",
-                                //jsFrameworkFolder + "app.executeBefore.js",
-                                //jsFrameworkFolder + "app.executeAfter.js",
+                        //jsFrameworkFolder + "app.executeBefore.js",
+                        //jsFrameworkFolder + "app.executeAfter.js",
                                 jsFrameworkFolder + "jQueryCaching.js",
-                       
+
                                 //jsFrameworkFolder + "attachInitialize.js",
 
-                          
+
 
                                 jsFrameworkFolder + "app.js",
                                 jsFrameworkFolder + "app/*.js",
@@ -120,16 +120,16 @@ namespace ReviewApps {
                         //jsFrameworkFolder + "controllers.js",
 
                                 //jsFrameworkFolder + "extensions/ajax.js",
-                                //jsFrameworkFolder + "extensions/hiddenContainer.js",
-                                //jsFrameworkFolder + "extensions/clone.js",
-                                //jsFrameworkFolder + "extensions/constants.js",
-                                //jsFrameworkFolder + "extensions/inputChangeTracker.js",
-                                //jsFrameworkFolder + "extensions/modal.js",
-                                //jsFrameworkFolder + "extensions/pagination.js",
-                                //jsFrameworkFolder + "extensions/regularExp.js",
-                                //jsFrameworkFolder + "extensions/selectors.js",
-                                //jsFrameworkFolder + "extensions/spinner.js",
-                                //jsFrameworkFolder + "extensions/urls.js",
+                        //jsFrameworkFolder + "extensions/hiddenContainer.js",
+                        //jsFrameworkFolder + "extensions/clone.js",
+                        //jsFrameworkFolder + "extensions/constants.js",
+                        //jsFrameworkFolder + "extensions/inputChangeTracker.js",
+                        //jsFrameworkFolder + "extensions/modal.js",
+                        //jsFrameworkFolder + "extensions/pagination.js",
+                        //jsFrameworkFolder + "extensions/regularExp.js",
+                        //jsFrameworkFolder + "extensions/selectors.js",
+                        //jsFrameworkFolder + "extensions/spinner.js",
+                        //jsFrameworkFolder + "extensions/urls.js",
 
                                 jsFrameworkFolder + "extensions/*.js",
 
@@ -140,7 +140,7 @@ namespace ReviewApps {
                                 jsFrameworkFolder + "controllers/home-controller.js",
                                 jsFrameworkFolder + "controllers/reviews-controller.js",
                                 jsFrameworkFolder + "controllers/tags-controller.js",
-                                //jsFrameworkFolder + "controllers/*-controller.js",
+                        //jsFrameworkFolder + "controllers/*-controller.js",
 
                                 jsFrameworkFolder + "areas/admin/controllers/navItems-controller.js",
 
@@ -149,10 +149,6 @@ namespace ReviewApps {
                                 jsFrameworkFolder + "events/binding.js",
                                 jsFrameworkFolder + "events/list.js",
 
-                                jsFrameworkFolder + "jQueryExtend.js",
-                                jsFrameworkFolder + "jQueryExtend.fn.js",
-                                jsFrameworkFolder + "app.config.js",
-                                jsFrameworkFolder + "app.global.js",
 
                                 jsFrameworkFolder + "app.run.js"
 
@@ -170,8 +166,8 @@ namespace ReviewApps {
                                         stylesFolder + "font-awesome.min.css",
                                         stylesFolder + "site.css",
                                         stylesFolder + "header.css",
-                                        //stylesFolder + "flags32.css",
-                                        //stylesFolder + "flags32-combo.css",
+                        //stylesFolder + "flags32.css",
+                        //stylesFolder + "flags32-combo.css",
                                         stylesFolder + "Upload/jquery.fileupload.css",
 
                                         stylesFolder + "bootstrap-datetimepicker.css",
@@ -243,8 +239,8 @@ namespace ReviewApps {
                     #region CSS Bundles
 
                     bundles.Add(new StyleBundle("~/Content/css/styles").Include(
-                                  "~/Content/Published.Styles/Styles.min.css"
-
+                                  "~/Content/Published.Styles/Styles.min.css",
+                                  stylesFolder + "loader-spinner.min.css"
                     ));
 
                     #endregion

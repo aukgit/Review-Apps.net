@@ -703,6 +703,22 @@
     <Content Include="Content\Less\see-more-btn.less" />
     <Content Include="Content\Less\seo-optimize.less" />
     <Content Include="Content\Less\utilities\input-with-others.less" />
+    <Content Include="Content\published.scripts\front-end.js" />
+    <Content Include="Content\published.scripts\front-end.min.js">
+      <DependentUpon>front-end.js</DependentUpon>
+    </Content>
+    <Content Include="Content\published.scripts\jqueryval.js" />
+    <Content Include="Content\published.scripts\jqueryval.min.js">
+      <DependentUpon>jqueryval.js</DependentUpon>
+    </Content>
+    <Content Include="Content\published.scripts\upload.js" />
+    <Content Include="Content\published.scripts\upload.min.js">
+      <DependentUpon>upload.js</DependentUpon>
+    </Content>
+    <Content Include="Content\Published.Styles\Styles.css" />
+    <Content Include="Content\Published.Styles\Styles.min.css">
+      <DependentUpon>Styles.css</DependentUpon>
+    </Content>
     <Content Include="JavaScript-Mvc-framework\events\binding.js" />
     <Content Include="JavaScript-Mvc-framework\events\list.js" />
     <Content Include="JavaScript-Mvc-framework\controllers\account-controller.js" />
@@ -987,6 +1003,19 @@
     </Content>
     <Content Include="Content\css\loader-spinner.css.map">
       <DependentUpon>loader-spinner.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Bundles\front-end.js.bundle" />
+    <Content Include="Content\Bundles\jqueryval.js.bundle" />
+    <Content Include="Content\Bundles\Styles.css.bundle" />
+    <Content Include="Content\Bundles\upload.js.bundle" />
+    <Content Include="Content\published.scripts\front-end.min.js.map">
+      <DependentUpon>front-end.min.js</DependentUpon>
+    </Content>
+    <Content Include="Content\published.scripts\jqueryval.min.js.map">
+      <DependentUpon>jqueryval.min.js</DependentUpon>
+    </Content>
+    <Content Include="Content\published.scripts\upload.min.js.map">
+      <DependentUpon>upload.min.js</DependentUpon>
     </Content>
     <None Include="JavaScript-Mvc-framework\libs\jQuery\jquery-2.2.3.intellisense.js" />
     <Content Include="JavaScript-Mvc-framework\libs\jQuery\jquery-2.2.3.js" />

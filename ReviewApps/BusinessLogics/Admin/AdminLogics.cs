@@ -1,5 +1,5 @@
 ﻿namespace ReviewApps.BusinessLogics.Admin {
-    public class AdminLogics {
+    public class AdminLogics { 
         #region Navigation Controller
 
         #endregion
