@@ -9,7 +9,7 @@ namespace ReviewApps {
         public static void RegisterBundles(BundleCollection bundles) {
 
 
-            const BundleSelector bundleSelector = BundleSelector.DebugScripts ;
+            const BundleSelector bundleSelector = BundleSelector.ReleaseModeBundle ;
 
             const string jQueryVersion = "2.2.3";
             const string jsFrameworkFolder = "~/JavaScript-Mvc-framework/";
