@@ -22,6 +22,45 @@
     }
 }
 
+.text-button-same-line {
+    .margin-left(0);
+    .margin-right(0);
+
+    &.row {
+        .margin-left(0);
+        .margin-right(0);
+    }
+
+
+    .text {
+        .padding-top(7.5px);
+    }
+
+    &.left-align {
+        .text {
+            float: left;
+            .padding-right(6px);
+        }
+
+        .button-part {
+            float: left;
+        }
+    }
+
+    &.right-align {
+        .text {
+            float: right;
+            .padding-left(6px);
+        }
+
+        .button-part {
+            float: right;
+        }
+    }
+
+}
+
+
 label {
     a:link {
         color: @link-color;

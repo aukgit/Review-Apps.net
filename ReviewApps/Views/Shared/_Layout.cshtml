@@ -39,6 +39,9 @@
         <div id="hidden-fields-container">
             @RenderSection("hidden", false)
             @Html.Hidden("is-logged", User.Identity.IsAuthenticated)
+            @if (User.Identity.IsAuthenticated) {
+                @Html.Hidden("username", User.Identity.Name)
+            }
             @Html.GenerateUrlHiddenInputs(false, "account", "login")
         </div>
         <div>

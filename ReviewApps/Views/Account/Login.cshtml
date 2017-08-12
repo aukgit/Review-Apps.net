@@ -10,12 +10,11 @@
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
                 @Html.AntiForgeryToken()
-                <div class="row margin-r-0 margin-l-0">
-                    <div class="pull-left">
-                        Use your personal credentials to login.
-                        If you don't have any account please
+                <div class="row text-button-same-line left-align">
+                    <div class="text">
+                        Use your personal credentials to login. Please create a new one if you don't have already
                     </div>
-                    <div class="pull-right">
+                    <div class="button-part">
                         @Html.ActionLinkWithIcon("sign up", "Register", null, null, "", "fa fa-user-plus", "btn btn-success")
                     </div>
                 </div>

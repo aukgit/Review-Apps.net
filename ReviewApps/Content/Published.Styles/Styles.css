@@ -21102,6 +21102,34 @@ header {
 .login-btn-wrapper .btn {
   float: right;
 }
+.text-button-same-line {
+  margin-left: 0;
+  margin-right: 0;
+}
+.text-button-same-line.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.text-button-same-line .text {
+  padding-top: 7.5px;
+  padding-top: 0.7rem;
+}
+.text-button-same-line.left-align .text {
+  float: left;
+  padding-right: 6px;
+  padding-right: 0.6rem;
+}
+.text-button-same-line.left-align .button-part {
+  float: left;
+}
+.text-button-same-line.right-align .text {
+  float: right;
+  padding-left: 6px;
+  padding-left: 0.6rem;
+}
+.text-button-same-line.right-align .button-part {
+  float: right;
+}
 label a:link {
   color: #337ab7;
 }
