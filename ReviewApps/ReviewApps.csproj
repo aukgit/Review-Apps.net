@@ -240,7 +240,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppVar.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdvertiseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AppCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\AppsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ConfigController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FeaturedImagesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FeedbackCategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FeedbacksController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GalleryCategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NavItemsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PlatformsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RolesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="BusinessLogics\Admin\AdminLogics.cs" />
     <Compile Include="BusinessLogics\Admin\ModerationLogics.cs" />
     <Compile Include="BusinessLogics\Admin\NavigationLogics.cs" />
@@ -287,6 +301,7 @@
     <Compile Include="Modules\Extensions\HttpSessionStateExtension.cs" />
     <Compile Include="Modules\Extensions\HttpSessionStateBaseExtension.cs" />
     <Compile Include="Modules\Extensions\NameValueCollectionExtension.cs" />
+    <Compile Include="Modules\Filters\GzipCompressAttribute.cs" />
     <Compile Include="Modules\Type\ParametersProfile.cs" />
     <Compile Include="Modules\Type\ParametersProfileBase.cs" />
     <Compile Include="Modules\Type\ShortRouteProfile.cs" />
@@ -315,22 +330,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\AdvertiseController.cs" />
-    <Compile Include="Areas\Admin\Controllers\AppCategoriesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ConfigController.cs" />
-    <Compile Include="Areas\Admin\Controllers\FeaturedImagesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\FeedbackCategoriesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\FeedbacksController.cs" />
-    <Compile Include="Areas\Admin\Controllers\GalleryCategoriesController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
-    <Compile Include="Areas\Admin\Controllers\NavItemsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\PlatformsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\RolesController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Controllers\AppsController.cs" />
     <Compile Include="Controllers\PartialsController.cs" />
     <Compile Include="Controllers\ProfilesController.cs" />
@@ -471,21 +470,6 @@
     <Content Include="App_Data\ReviewApps.mdf" />
     <Content Include="App_Data\ReviewApps_log.ldf">
       <DependentUpon>ReviewApps.mdf</DependentUpon>
-    </Content>
-    <Content Include="Areas\Admin\Views\Config\_Basic-tab.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Admin\Views\Config\_Developers-tab.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Admin\Views\Config\_Email-setup-tab.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Admin\Views\Config\_External-logins-tab.cshtml" />
-    <Content Include="Areas\Admin\Views\Config\_Office-tab.cshtml" />
-    <Content Include="Areas\Admin\Views\Config\_Urls-tab.cshtml" />
-    <Content Include="Areas\Admin\Views\Config\_WeReview-tab.cshtml">
-      <SubType>Code</SubType>
     </Content>
     <Content Include="Content\css\animate-refresh.css" />
     <Content Include="Content\css\animate-refresh.min.css">
@@ -655,8 +639,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Areas\Admin\Views\AppCategories\_CreateOrEdit.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_NavBar.cshtml" />
     <Content Include="Content\images\star-img.png" />
     <Content Include="Content\Less\animate-refresh.less" />
     <Content Include="Content\Less\blog-page.less" />
@@ -665,7 +647,6 @@
     <Content Include="Content\css\ckedit-skin-bootstrap.css.map">
       <DependentUpon>ckedit-skin-bootstrap.css</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\Apps\Index.cshtml" />
     <Content Include="Content\css\utilities.css.map">
       <DependentUpon>utilities.css</DependentUpon>
     </Content>
@@ -809,7 +790,6 @@
     <Content Include="Content\css\backend-developer.css.map">
       <DependentUpon>backend-developer.css</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\Feedbacks\Done.cshtml" />
     <Content Include="JavaScript-Mvc-framework\libs\FrontEnd\wow.js" />
     <Content Include="JavaScript-Mvc-framework\libs\jquery.blockUI.js" />
     <Content Include="JavaScript-Mvc-framework\libs\skins\bootstrapck\.temp\css\dialog.css" />
@@ -918,7 +898,6 @@
       <DependentUpon>bootstrap-tagsinput-override.css</DependentUpon>
     </Content>
     <Content Include="Content\Less\controllers-style.less" />
-    <Content Include="Areas\Admin\Views\Config\_Tabs-List.cshtml" />
     <Content Include="Content\Less\Animate\animationclasses.less" />
     <Content Include="Content\Less\Animate\bounce.less" />
     <Content Include="Content\Less\Animate\bounceIn.less" />
@@ -994,6 +973,84 @@
     <Content Include="Content\css\see-more-btn.css.map">
       <DependentUpon>see-more-btn.css</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\Advertise\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Advertise\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Advertise\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Advertise\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Advertise\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AppCategories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AppCategories\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AppCategories\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AppCategories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AppCategories\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AppCategories\_CreateOrEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Apps\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Apps\Moderate.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\CleanSystem.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\_Basic-tab.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\_Developers-tab.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\_Email-setup-tab.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\_External-logins-tab.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\_Office-tab.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\_Tabs-List.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\_Urls-tab.cshtml" />
+    <Content Include="Areas\Admin\Views\Config\_WeReview-tab.cshtml" />
+    <Content Include="Areas\Admin\Views\FeaturedImages\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\FeaturedImages\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\FeaturedImages\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\FeaturedImages\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\FeaturedImages\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\FeaturedImages\_CreateOrEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\FeedbackCategories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\FeedbackCategories\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\FeedbackCategories\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\FeedbackCategories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\FeedbackCategories\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedbacks\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedbacks\Done.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedbacks\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Feedbacks\Reply.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategories\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategories\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GalleryCategories\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ImageResizeSettings\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ImageResizeSettings\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ImageResizeSettings\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\ImageResizeSettings\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ImageResizeSettings\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\_CreateOrEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\NavItems\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\NavItems\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NavItems\List.cshtml" />
+    <Content Include="Areas\Admin\Views\NavItems\_CreateOrEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Platforms\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Platforms\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Platforms\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Platforms\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Platforms\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Roles\_CreateOrEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_NavBar.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\EnableUserBlock.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\FilterBlockedUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\ManageRoles.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\UserBlock.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\_IndexDefault.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -1025,8 +1082,6 @@
     <Content Include="JavaScript-Mvc-framework\service\user.js" />
     <Content Include="NodeJSCssMinifier\css.minifier.js" />
     <Content Include="Sitemap.xml" />
-    <Content Include="Areas\Admin\Views\Config\CleanSystem.cshtml" />
-    <Content Include="Areas\Admin\Views\Apps\Moderate.cshtml" />
     <Content Include="Content\css\front-developer.css.map">
       <DependentUpon>front-developer.css</DependentUpon>
     </Content>
@@ -1112,75 +1167,11 @@
     <Content Include="ExternalDll\LinqKit.dll" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Config\Index.cshtml" />
     <Content Include="Icon.png" />
     <Content Include="Images\error-icon-bucket.png" />
     <Content Include="Images\slider-background-image.jpg" />
     <Content Include="robots.txt" />
     <Content Include="JavaScript-Mvc-framework\libs\bootstrap-table-export.js" />
-    <Content Include="Areas\Admin\Views\ImageResizeSettings\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\ImageResizeSettings\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\ImageResizeSettings\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\ImageResizeSettings\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\ImageResizeSettings\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Roles\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Roles\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Roles\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Roles\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Menu\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Menu\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Menu\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\NavItems\Add.cshtml" />
-    <Content Include="Areas\Admin\Views\NavItems\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\NavItems\List.cshtml" />
-    <Content Include="Areas\Admin\Views\Menu\_CreateOrEdit.cshtml" />
-    <Content Include="Areas\Admin\Views\NavItems\_CreateOrEdit.cshtml" />
-    <Content Include="Areas\Admin\Views\FeedbackCategories\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\FeedbackCategories\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\FeedbackCategories\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\FeedbackCategories\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\FeedbackCategories\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Feedbacks\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Feedbacks\Reply.cshtml" />
-    <Content Include="Areas\Admin\Views\Feedbacks\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\FilterBlockedUsers.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\_IndexDefault.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\UserBlock.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\EnableUserBlock.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\ManageRoles.cshtml" />
-    <Content Include="Areas\Admin\Views\Platforms\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Platforms\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Platforms\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Platforms\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Platforms\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\AppCategories\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\AppCategories\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\AppCategories\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\AppCategories\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\AppCategories\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\GalleryCategories\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\GalleryCategories\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\GalleryCategories\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\GalleryCategories\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\GalleryCategories\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Advertise\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Advertise\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Advertise\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Advertise\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Advertise\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Roles\_CreateOrEdit.cshtml" />
-    <Content Include="Areas\Admin\Views\FeaturedImages\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\FeaturedImages\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\FeaturedImages\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\FeaturedImages\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\FeaturedImages\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\FeaturedImages\_CreateOrEdit.cshtml" />
     <Content Include="Styles\CompactCSS.css" />
     <Content Include="Styles\CompactCSS.min.css">
       <DependentUpon>CompactCSS.css</DependentUpon>
@@ -1430,7 +1421,6 @@
     <Folder Include="Modules\Claims\" />
     <Folder Include="Modules\Constants\" />
     <Folder Include="Modules\Cookie\" />
-    <Folder Include="Modules\Filters\" />
     <Folder Include="Modules\ViewEngine\" />
     <Folder Include="Uploads\Files\Private\" />
     <Folder Include="Uploads\Images\Private\" />
@@ -1464,8 +1454,6 @@
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:14809/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:14809/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
