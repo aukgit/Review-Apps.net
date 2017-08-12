@@ -7,22 +7,17 @@
     <meta name="google-site-verification" content="@AppConfig.Setting.GoogleMetaTag" />
     <meta name="author" content="Md. Alim Ul Karim">
     <title>@ViewBag.Title</title>
+    @RenderSection("cssBefore", false)
     @Styles.Render("~/Content/css/styles")
     @RenderSection("css", false)
-    @if (ViewBag.Meta != null)
-    {
+    @if (ViewBag.Meta != null) {
         <meta name="description" content="@ViewBag.Meta" />
-    }
-    else
-    {
+    } else {
         <meta name="description" content="@AppVar.Name,@AppVar.Subtitle, Review, Mobile Apps, Apple Apps, Android Apps, Reviewing website, mobile apps rating website" />
     }
-    @if (ViewBag.Keywords != null)
-    {
+    @if (ViewBag.Keywords != null) {
         <meta name="keywords" content="@ViewBag.Keywords" />
-    }
-    else
-    {
+    } else {
         <meta name="keywords" content="@AppVar.Name,@AppVar.Subtitle, Review, Mobile Apps, Apple Apps, Android Apps, Reviewing website, mobile apps rating website" />
     }
     <!--[if lt IE 9]>
@@ -62,6 +57,7 @@
     </div>
     @RenderSection("featured", false)
     @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scriptsBefore", false)
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", false)
 </body>

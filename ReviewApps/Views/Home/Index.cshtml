@@ -5,6 +5,10 @@
 @section hidden{
     @Html.ComponentsEnableFor("owl-carousel","revolution-gallery")
 }
+
+@section cssBefore{
+    @Styles.Render("~/Content/css/galleryCss")
+}
 <div class="home-page">
     @{ Html.RenderAction("HomePageGallery", "Partials"); }
     <div class="top-gap-2x">
@@ -14,3 +18,7 @@
         @{ Html.RenderAction("TopAppsList", "Partials"); }
     </div>
 </div>
+
+@section scriptsBefore{
+    @Scripts.Render("~/bundles/gallery")
+}

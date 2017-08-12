@@ -2,11 +2,11 @@
 <bundle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
   <settings>
     <!--Determines if the bundle file should be automatically optimized after creation/update.-->
-    <minify>true</minify>
+    <minify>false</minify>
     <!--Determin whether to generate/re-generate this bundle on building the solution.-->
     <runOnBuild>true</runOnBuild>
     <!--Use absolute path in the generated CSS files. By default, the URLs are relative to generated bundled CSS file.-->
-    <adjustRelativePaths>true</adjustRelativePaths>
+    <adjustRelativePaths>false</adjustRelativePaths>
     <!--Specifies a custom subfolder to save files to. By default, compiled output will be placed in the same folder and nested under the original file.-->
     <outputDirectory>../published.styles</outputDirectory>
   </settings>
@@ -32,18 +32,22 @@
     <file>/Content/css/toastr.css</file>
     <file>/Content/css/override-mvc.css</file>
     <file>/Content/css/validator.css</file>
+    
     <file>/Content/css/editor-templates.css</file>
     <file>/Content/css/base-theme-styles.css</file>
     <file>/Content/css/style.css</file>
     <file>/Content/css/responsive.css</file>
-    <file>/JavaScript-Mvc-framework/libs/revolution-slider/css/settings.css</file>
+    
+    
+    
     <file>/Content/css/owl.carousel.css</file>
     <file>/Content/css/owl.theme.css</file>
     <file>/Content/css/owl.custom.finalize.css</file>
     <file>/Content/css/controllers-style.css</file>
     <file>/Content/css/seo-optimize.css</file>
-    <file>/Content/css/front-developer.css</file>
+    <file>/Content/css/front-developer.min.css</file>
     <file>/Content/css/footer-fixing.css</file>
     <file>/Content/css/utilities.css</file>
+    
   </files>
 </bundle>

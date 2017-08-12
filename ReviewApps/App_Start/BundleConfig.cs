@@ -1,4 +1,4 @@
-﻿using System.Web.Optimization;
+using System.Web.Optimization;
 
 namespace ReviewApps {
     public static class BundleConfig {
@@ -9,7 +9,7 @@ namespace ReviewApps {
         public static void RegisterBundles(BundleCollection bundles) {
 
 
-            const BundleSelector bundleSelector = BundleSelector.ReleaseModeBundle;
+            const BundleSelector bundleSelector = BundleSelector.DebugScripts;
 
             const string jQueryVersion = "2.2.3";
             const string jsFrameworkFolder = "~/JavaScript-Mvc-framework/";
@@ -32,6 +32,16 @@ namespace ReviewApps {
             );
             #endregion
 
+            bundles.Add(new ScriptBundle("~/bundles/gallery").Include(
+                jsLibraryFolder + "revolution-slider/js/jquery.themepunch.tools.min.js",
+                jsLibraryFolder + "revolution-slider/js/jquery.themepunch.revolution.min.js"
+            ));
+
+
+            bundles.Add(new StyleBundle("~/Content/css/galleryCss").Include(
+             jsLibraryFolder + "revolution-slider/css/settings.css"
+
+            ));
 
             switch (bundleSelector) {
                 case BundleSelector.DebugScripts:

@@ -18,7 +18,7 @@
                 <div class="clear"></div>
             </div>
             <div class="app-suggested-list-items featured-apps-list-items" title="@divSubtitle">
-                @foreach (var app in Model) {
+                @foreach (var app in Model) { 
                     var url = app.GetAbsoluteUrl();
                     var platform = @app.GetPlatform();
                     var platformSubtitle = platform.PlatformName + " mobile apps";

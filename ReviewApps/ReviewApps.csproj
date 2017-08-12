@@ -657,6 +657,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Areas\Admin\Views\AppCategories\_CreateOrEdit.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_NavBar.cshtml" />
+    <Content Include="Content\images\star-img.png" />
     <Content Include="Content\Less\animate-refresh.less" />
     <Content Include="Content\Less\blog-page.less" />
     <Content Include="Content\Less\bootstrap-datetimepicker.less" />

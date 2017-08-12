@@ -24,8 +24,10 @@
     <file>/JavaScript-Mvc-framework/libs/FrontEnd/jquery.isotope.min.js</file>
     <file>/JavaScript-Mvc-framework/libs/FrontEnd/owl.carousel.min.js</file>
     <file>/JavaScript-Mvc-framework/libs/FrontEnd/jquery.number.js</file>
-    <file>/JavaScript-Mvc-framework/libs/revolution-slider/js/jquery.themepunch.tools.min.js</file>
-    <file>/JavaScript-Mvc-framework/libs/revolution-slider/js/jquery.themepunch.revolution.min.js</file>
+    
+
+    
+    
     <file>/JavaScript-Mvc-framework/libs/DevOrgPlugins/developers-organism.component.js</file>
     <file>/JavaScript-Mvc-framework/libs/FrontEnd/front-developer.js</file>
     <file>/JavaScript-Mvc-framework/libs/jquery.blockUI.js</file>
