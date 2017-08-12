@@ -9,7 +9,7 @@ namespace ReviewApps {
         public static void RegisterBundles(BundleCollection bundles) {
 
 
-            const BundleSelector bundleSelector = BundleSelector.DebugScripts;
+            const BundleSelector bundleSelector = BundleSelector.ReleaseModeBundle;
 
             const string jQueryVersion = "2.2.3";
             const string jsFrameworkFolder = "~/JavaScript-Mvc-framework/";
@@ -38,10 +38,10 @@ namespace ReviewApps {
             ));
 
 
-            bundles.Add(new StyleBundle("~/Content/css/galleryCss").Include(
-             jsLibraryFolder + "revolution-slider/css/settings.css"
+            //bundles.Add(new StyleBundle("~/Content/css/galleryCss").Include(
+            // jsLibraryFolder + "revolution-slider/css/settings.css"
 
-            ));
+            //));
 
             switch (bundleSelector) {
                 case BundleSelector.DebugScripts:
@@ -249,18 +249,14 @@ namespace ReviewApps {
                     #region CSS Bundles
 
                     bundles.Add(new StyleBundle("~/Content/css/styles").Include(
-                                  "~/Content/Published.Styles/Styles.min.css",
-                                  stylesFolder + "loader-spinner.min.css"
+                                  "~/Content/Published.Styles/Styles.min.css"
                     ));
 
                     #endregion
                     break;
 
             }
-
-
-
-
+            
             #region Configs
 
             bundles.UseCdn = true;

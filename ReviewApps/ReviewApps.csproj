@@ -1023,6 +1023,7 @@
     <Content Include="JavaScript-Mvc-framework\app\service.js" />
     <Content Include="JavaScript-Mvc-framework\service\redirect.js" />
     <Content Include="JavaScript-Mvc-framework\service\user.js" />
+    <Content Include="nodejs\css.minifier.js" />
     <Content Include="Sitemap.xml" />
     <Content Include="Areas\Admin\Views\Config\CleanSystem.cshtml" />
     <Content Include="Areas\Admin\Views\Apps\Moderate.cshtml" />
