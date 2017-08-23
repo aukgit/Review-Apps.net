@@ -5,6 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ReviewAppsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Advertise">
+          <Key>
+            <PropertyRef Name="AdvertiseID" />
+          </Key>
+          <Property Name="AdvertiseID" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Subtitle" Type="nvarchar" MaxLength="500" />
+          <Property Name="Description" Type="nvarchar" MaxLength="800" />
+          <Property Name="PublishAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="EndAt" Type="datetime2" Precision="7" />
+          <Property Name="IsLifeTime" Type="bit" Nullable="false" />
+          <Property Name="PaymentID" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="App">
           <Key>
             <PropertyRef Name="AppID" />
@@ -15,7 +28,7 @@
           <Property Name="PlatformVersion" Type="float" Nullable="false" />
           <Property Name="CategoryID" Type="smallint" Nullable="false" />
           <Property Name="Url" Type="varchar" MaxLength="70" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="400" Nullable="false" />
           <Property Name="PostedByUserID" Type="bigint" Nullable="false" />
           <Property Name="ReviewsCount" Type="smallint" Nullable="false" />
           <Property Name="IsVideoExist" Type="bit" Nullable="false" />
@@ -33,6 +46,20 @@
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="LastModifiedDate" Type="date" />
           <Property Name="UrlWithoutEscapseSequence" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="IsDetailPresent" Type="bit" Nullable="false" />
+          <Property Name="PublishAt" Type="smalldatetime" />
+          <Property Name="IsPublishAtScheduledTime" Type="bit" Nullable="false" />
+          <Property Name="SHA256" Type="binary" MaxLength="33" Nullable="false" />
+          <Property Name="PriceInUSD" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AppDetail">
+          <Key>
+            <PropertyRef Name="AppDetailID" />
+          </Key>
+          <Property Name="AppDetailID" Type="bigint" Nullable="false" />
+          <Property Name="DescriptionInHTML1" Type="nvarchar" MaxLength="800" Nullable="false" />
+          <Property Name="DescriptionInHTML2" Type="nvarchar(max)" />
+          <Property Name="DescriptionInHTML3" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="AppDraft">
           <Key>
@@ -57,6 +84,71 @@
           <Property Name="Url" Type="varchar" MaxLength="65" />
           <Property Name="ReleaseDate" Type="date" />
         </EntityType>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="BlogID" />
+          </Key>
+          <Property Name="BlogID" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Article" Type="nvarchar" MaxLength="800" Nullable="false" />
+          <Property Name="ContainsFiles" Type="bit" Nullable="false" />
+          <Property Name="BlogCategoryID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="IsDraft" Type="bit" Nullable="false" />
+          <Property Name="PublishedAt" Type="smalldatetime" Nullable="false" />
+          <Property Name="DraftAt" Type="smalldatetime" Nullable="false" />
+          <Property Name="CreatedAt" Type="smalldatetime" Nullable="false" />
+          <Property Name="UpdatedAt" Type="smalldatetime" Nullable="false" />
+          <Property Name="ReportedCount" Type="smallint" Nullable="false" />
+          <Property Name="ViewsCount" Type="bigint" Nullable="false" />
+          <Property Name="LikedCount" Type="bigint" Nullable="false" />
+          <Property Name="DislikedCount" Type="bigint" Nullable="false" />
+          <Property Name="IsGalleryPresent" Type="bit" Nullable="false" />
+          <Property Name="TakeOffAfter" Type="smalldatetime" />
+          <Property Name="CssStyleID" Type="smallint" />
+          <Property Name="Tags" Type="nvarchar" MaxLength="500" />
+          <Property Name="Slug" Type="nvarchar" MaxLength="220" Nullable="false" />
+          <Property Name="SHA256" Type="varbinary" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogAppRelation">
+          <Key>
+            <PropertyRef Name="BlogAppRelationID" />
+          </Key>
+          <Property Name="BlogAppRelationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogID" Type="bigint" Nullable="false" />
+          <Property Name="AppID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogCategory">
+          <Key>
+            <PropertyRef Name="BlogCategoryID" />
+          </Key>
+          <Property Name="BlogCategoryID" Type="int" Nullable="false" />
+          <Property Name="BlogCategoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Slug" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsCore" Type="bit" Nullable="false" />
+          <Property Name="IsFileType" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogDetail">
+          <Key>
+            <PropertyRef Name="BlogDetailID" />
+          </Key>
+          <Property Name="BlogDetailID" Type="bigint" Nullable="false" />
+          <Property Name="Detail1" Type="nvarchar" MaxLength="800" Nullable="false" />
+          <Property Name="Detail2" Type="nvarchar(max)" />
+          <Property Name="Detail3" Type="nvarchar(max)" />
+          <Property Name="Detail4" Type="nvarchar(max)" />
+          <Property Name="Detail5" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="BlogFile">
+          <Key>
+            <PropertyRef Name="BlogFilesID" />
+          </Key>
+          <Property Name="BlogFilesID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BlogID" Type="bigint" Nullable="false" />
+          <Property Name="GalleryID" Type="uniqueidentifier" />
+          <Property Name="IsLink" Type="bit" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="800" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -74,6 +166,19 @@
           <Property Name="PlatformID" Type="tinyint" Nullable="false" />
           <Property Name="PlatformVersion" Type="float" Nullable="false" />
         </EntityType>
+        <EntityType Name="CssStyle">
+          <Key>
+            <PropertyRef Name="CssStyleID" />
+          </Key>
+          <Property Name="CssStyleID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CssName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="Style1" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Style2" Type="nvarchar(max)" />
+          <Property Name="Style3" Type="nvarchar(max)" />
+          <Property Name="Style4" Type="nvarchar(max)" />
+          <Property Name="ParentStyleID" Type="smallint" />
+          <Property Name="IsCompiled" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="FeaturedImage">
           <Key>
             <PropertyRef Name="FeaturedImageID" />
@@ -82,6 +187,13 @@
           <Property Name="AppID" Type="bigint" Nullable="false" />
           <Property Name="IsFeatured" Type="bit" Nullable="false" />
           <Property Name="UserID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FileType">
+          <Key>
+            <PropertyRef Name="FileTypeID" />
+          </Key>
+          <Property Name="FileTypeID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="varchar" MaxLength="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Gallery">
           <Key>
@@ -105,26 +217,32 @@
           <Property Name="Height" Type="float" Nullable="false" />
           <Property Name="IsAdvertise" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="LatestSeenNotification">
+        <EntityType Name="GenericSetting">
           <Key>
-            <PropertyRef Name="LatestSeenNotificationID" />
+            <PropertyRef Name="GenericSettingID" />
           </Key>
-          <Property Name="LatestSeenNotificationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="bigint" Nullable="false" />
-          <Property Name="NotificationTypeID" Type="tinyint" Nullable="false" />
-          <Property Name="Message" Type="varchar" MaxLength="50" />
-          <Property Name="Dated" Type="smalldatetime" Nullable="false" />
+          <Property Name="GenericSettingID" Type="bigint" Nullable="false" />
+          <Property Name="SettingName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GenericSettingItem">
+          <Key>
+            <PropertyRef Name="GenericSettingItemID" />
+          </Key>
+          <Property Name="GenericSettingItemID" Type="bigint" Nullable="false" />
+          <Property Name="GenericSettingID" Type="bigint" Nullable="false" />
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
             <PropertyRef Name="MessageID" />
           </Key>
           <Property Name="MessageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Msg1" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="Msg2" Type="varchar" MaxLength="300" />
-          <Property Name="Msg3" Type="varchar" MaxLength="300" />
-          <Property Name="Msg4" Type="varchar" MaxLength="300" />
-          <Property Name="MessageDisplay" Type="varchar" MaxLength="1200" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Msg1" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Msg2" Type="nvarchar" MaxLength="300" />
+          <Property Name="Msg3" Type="nvarchar" MaxLength="300" />
+          <Property Name="Msg4" Type="nvarchar" MaxLength="300" />
+          <Property Name="MessageDisplay" Type="nvarchar" MaxLength="1200" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="SenderUserID" Type="bigint" Nullable="false" />
           <Property Name="ReceiverUserID" Type="bigint" Nullable="false" />
           <Property Name="IsDraft" Type="bit" Nullable="false" />
@@ -138,17 +256,18 @@
             <PropertyRef Name="MessageSeenID" />
           </Key>
           <Property Name="MessageSeenID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Msg1" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="Msg2" Type="varchar" MaxLength="300" />
-          <Property Name="Msg3" Type="varchar" MaxLength="300" />
-          <Property Name="Msg4" Type="varchar" MaxLength="300" />
-          <Property Name="MessageDisplay" Type="varchar" MaxLength="1200" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Msg1" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Msg2" Type="nvarchar" MaxLength="300" />
+          <Property Name="Msg3" Type="nvarchar" MaxLength="300" />
+          <Property Name="Msg4" Type="nvarchar" MaxLength="300" />
+          <Property Name="MessageDisplay" Type="nvarchar" MaxLength="1200" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="SenderUserID" Type="bigint" Nullable="false" />
           <Property Name="ReceiverUserID" Type="bigint" Nullable="false" />
           <Property Name="IsDraft" Type="bit" Nullable="false" />
           <Property Name="LastModified" Type="smalldatetime" Nullable="false" />
           <Property Name="SentDate" Type="smalldatetime" Nullable="false" />
           <Property Name="ReceivedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="MessageIcon" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -157,8 +276,24 @@
           <Property Name="NotificationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="bigint" Nullable="false" />
           <Property Name="NotificationTypeID" Type="tinyint" Nullable="false" />
-          <Property Name="Message" Type="varchar" MaxLength="50" />
+          <Property Name="Message" Type="nvarchar" MaxLength="150" />
           <Property Name="Dated" Type="smalldatetime" Nullable="false" />
+          <Property Name="FromUserID" Type="bigint" />
+          <Property Name="IsGeneratedFromSystem" Type="bit" Nullable="false" />
+          <Property Name="IsSeen" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotificationLatest">
+          <Key>
+            <PropertyRef Name="LatestSeenNotificationID" />
+          </Key>
+          <Property Name="LatestSeenNotificationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="NotificationTypeID" Type="tinyint" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="150" />
+          <Property Name="Dated" Type="smalldatetime" Nullable="false" />
+          <Property Name="FromUserID" Type="bigint" />
+          <Property Name="IsGeneratedFromSystem" Type="bit" Nullable="false" />
+          <Property Name="IsSeen" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="NotificationType">
           <Key>
@@ -168,6 +303,35 @@
           <Property Name="TypeName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IsGood" Type="bit" Nullable="false" />
           <Property Name="DefaultMessage" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="LabelColor" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentMethodID" Type="smallint" Nullable="false" />
+          <Property Name="PurposeText" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Dated" Type="smalldatetime" Nullable="false" />
+          <Property Name="ByUserID" Type="bigint" Nullable="false" />
+          <Property Name="PaymentTypeID" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodID" />
+          </Key>
+          <Property Name="PaymentMethodID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MethodName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="AuthPass" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="AuthID" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeID" />
+          </Key>
+          <Property Name="PaymentTypeID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentType" Type="varchar" MaxLength="80" Nullable="false" />
         </EntityType>
         <EntityType Name="Platform">
           <Key>
@@ -207,6 +371,29 @@
           <Property Name="IsDisliked" Type="bit" Nullable="false" />
           <Property Name="IsNone" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Subscribe">
+          <Key>
+            <PropertyRef Name="SubscribeID" />
+          </Key>
+          <Property Name="SubscribeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubscribedByUserID" Type="bigint" />
+          <Property Name="SubscribedToUserID" Type="bigint" Nullable="false" />
+          <Property Name="SubscribedByEmail" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsSubscribedByUser" Type="bit" Nullable="false" />
+          <Property Name="IsSubscribedByNonUser" Type="bit" Nullable="false" />
+          <Property Name="MailsSend" Type="bigint" Nullable="false" />
+          <Property Name="LastSendAt" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Tag">
           <Key>
             <PropertyRef Name="TagID" />
@@ -222,6 +409,14 @@
           <Property Name="TagID" Type="bigint" Nullable="false" />
           <Property Name="AppID" Type="bigint" Nullable="false" />
         </EntityType>
+        <EntityType Name="TagBlogRelation">
+          <Key>
+            <PropertyRef Name="TagBlogRelationID" />
+          </Key>
+          <Property Name="TagBlogRelationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagID" Type="bigint" Nullable="false" />
+          <Property Name="BlogID" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="TempUpload">
           <Key>
             <PropertyRef Name="TempUploadID" />
@@ -231,6 +426,18 @@
           <Property Name="AppID" Type="bigint" />
           <Property Name="GalleryID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RelatingUploadGuidForDelete" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="UploadFileDraft">
+          <Key>
+            <PropertyRef Name="UploadFileDraftID" />
+          </Key>
+          <Property Name="UploadFileDraftID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Dated" Type="date" Nullable="false" />
+          <Property Name="UseID" Type="bigint" />
+          <Property Name="GalleryCategoryID" Type="int" />
+          <Property Name="IsUsed" Type="bit" Nullable="false" />
+          <Property Name="FileTypeID" Type="smallint" Nullable="false" />
+          <Property Name="FileSizeMB" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -242,6 +449,17 @@
           <Property Name="Phone" Type="varchar" MaxLength="18" />
           <Property Name="UserName" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="TotalEarnedPoints" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserLatestUpdates">
+          <Key>
+            <PropertyRef Name="UserLatestUpdatesID" />
+          </Key>
+          <Property Name="UserLatestUpdatesID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogID" Type="bigint" />
+          <Property Name="AppID" Type="bigint" />
+          <Property Name="IsSendToSubscriber" Type="bit" Nullable="false" />
+          <Property Name="AddedAt" Type="smalldatetime" />
+          <Property Name="ByUserID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="UserPoint">
           <Key>
@@ -261,6 +479,18 @@
           <Property Name="TaskName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Point" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Advertise_Payment">
+          <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
+          <End Role="Advertise" Type="Self.Advertise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="PaymentID" />
+            </Principal>
+            <Dependent Role="Advertise">
+              <PropertyRef Name="PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_App_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="App" Type="Self.App" Multiplicity="*" />
@@ -297,6 +527,102 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AppDetail_App">
+          <End Role="App" Type="Self.App" Multiplicity="1" />
+          <End Role="AppDetail" Type="Self.AppDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="App">
+              <PropertyRef Name="AppID" />
+            </Principal>
+            <Dependent Role="AppDetail">
+              <PropertyRef Name="AppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blog_BlogCategory">
+          <End Role="BlogCategory" Type="Self.BlogCategory" Multiplicity="1" />
+          <End Role="Blog" Type="Self.Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogCategory">
+              <PropertyRef Name="BlogCategoryID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="BlogCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blog_BlogDetail">
+          <End Role="BlogDetail" Type="Self.BlogDetail" Multiplicity="1" />
+          <End Role="Blog" Type="Self.Blog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="BlogDetail">
+              <PropertyRef Name="BlogDetailID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blog_CssStyle">
+          <End Role="CssStyle" Type="Self.CssStyle" Multiplicity="0..1" />
+          <End Role="Blog" Type="Self.Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CssStyle">
+              <PropertyRef Name="CssStyleID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="CssStyleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blog_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Blog" Type="Self.Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogAppRelation_App">
+          <End Role="App" Type="Self.App" Multiplicity="1" />
+          <End Role="BlogAppRelation" Type="Self.BlogAppRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="App">
+              <PropertyRef Name="AppID" />
+            </Principal>
+            <Dependent Role="BlogAppRelation">
+              <PropertyRef Name="AppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogAppRelation_Blog">
+          <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+          <End Role="BlogAppRelation" Type="Self.BlogAppRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="BlogAppRelation">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogFile_Blog">
+          <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+          <End Role="BlogFile" Type="Self.BlogFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="BlogFile">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CellPhone_Platform">
           <End Role="Platform" Type="Self.Platform" Multiplicity="1" />
           <End Role="CellPhone" Type="Self.CellPhone" Multiplicity="*" />
@@ -318,6 +644,18 @@
             </Principal>
             <Dependent Role="CellPhone">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CssStyle_CssStyle">
+          <End Role="CssStyle" Type="Self.CssStyle" Multiplicity="0..1" />
+          <End Role="CssStyle1" Type="Self.CssStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CssStyle">
+              <PropertyRef Name="CssStyleID" />
+            </Principal>
+            <Dependent Role="CssStyle1">
+              <PropertyRef Name="ParentStyleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -357,14 +695,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GenericSettingItem_GenericSetting">
+          <End Role="GenericSetting" Type="Self.GenericSetting" Multiplicity="1" />
+          <End Role="GenericSettingItem" Type="Self.GenericSettingItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GenericSetting">
+              <PropertyRef Name="GenericSettingID" />
+            </Principal>
+            <Dependent Role="GenericSettingItem">
+              <PropertyRef Name="GenericSettingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LatestSeenNotification_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="LatestSeenNotification" Type="Self.LatestSeenNotification" Multiplicity="*" />
+          <End Role="NotificationLatest" Type="Self.NotificationLatest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="LatestSeenNotification">
+            <Dependent Role="NotificationLatest">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -426,6 +776,30 @@
             </Principal>
             <Dependent Role="Notification">
               <PropertyRef Name="NotificationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PaymentMethod">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PaymentType">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -501,6 +875,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TagBlogRelation_Blog">
+          <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+          <End Role="TagBlogRelation" Type="Self.TagBlogRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="TagBlogRelation">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagBlogRelation_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="TagBlogRelation" Type="Self.TagBlogRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagID" />
+            </Principal>
+            <Dependent Role="TagBlogRelation">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UploadFileDraft_FileType">
+          <End Role="FileType" Type="Self.FileType" Multiplicity="1" />
+          <End Role="UploadFileDraft" Type="Self.UploadFileDraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileType">
+              <PropertyRef Name="FileTypeID" />
+            </Principal>
+            <Dependent Role="UploadFileDraft">
+              <PropertyRef Name="FileTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UploadFileDraft_GalleryCategory">
+          <End Role="GalleryCategory" Type="Self.GalleryCategory" Multiplicity="0..1" />
+          <End Role="UploadFileDraft" Type="Self.UploadFileDraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GalleryCategory">
+              <PropertyRef Name="GalleryCategoryID" />
+            </Principal>
+            <Dependent Role="UploadFileDraft">
+              <PropertyRef Name="GalleryCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLatestUpdates_App">
+          <End Role="App" Type="Self.App" Multiplicity="0..1" />
+          <End Role="UserLatestUpdates" Type="Self.UserLatestUpdates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="App">
+              <PropertyRef Name="AppID" />
+            </Principal>
+            <Dependent Role="UserLatestUpdates">
+              <PropertyRef Name="AppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLatestUpdates_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserLatestUpdates" Type="Self.UserLatestUpdates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserLatestUpdates">
+              <PropertyRef Name="ByUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserPoint_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="UserPoint" Type="Self.UserPoint" Multiplicity="*" />
@@ -528,33 +974,118 @@
         <Function Name="AppsSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchText" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetSha1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varbinary">
+          <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetSha256" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varbinary">
+          <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetSha2561" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="CODE" Type="varbinary" MaxLength="32" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetSha512" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varbinary">
+          <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="ResetAppDrafts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ResetApps" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ResetAppsAndUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ResetReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ResetWholeSystem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SplitString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="stringToSplit" Type="varchar" Mode="In" />
+          <Parameter Name="splitChar" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ID" Type="int" />
+                <Property Name="Name" Type="nvarchar" MaxLength="500" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="ReviewAppsModelStoreContainer">
+          <EntitySet Name="Advertise" EntityType="Self.Advertise" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="App" EntityType="Self.App" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppDetail" EntityType="Self.AppDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AppDraft" EntityType="Self.AppDraft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Blog" EntityType="Self.Blog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogAppRelation" EntityType="Self.BlogAppRelation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogCategory" EntityType="Self.BlogCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogDetail" EntityType="Self.BlogDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogFile" EntityType="Self.BlogFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CellPhone" EntityType="Self.CellPhone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CssStyle" EntityType="Self.CssStyle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FeaturedImage" EntityType="Self.FeaturedImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FileType" EntityType="Self.FileType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gallery" EntityType="Self.Gallery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GalleryCategory" EntityType="Self.GalleryCategory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LatestSeenNotification" EntityType="Self.LatestSeenNotification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GenericSetting" EntityType="Self.GenericSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GenericSettingItem" EntityType="Self.GenericSettingItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MessageSeen" EntityType="Self.MessageSeen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationLatest" EntityType="Self.NotificationLatest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotificationType" EntityType="Self.NotificationType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Platform" EntityType="Self.Platform" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReviewLikeDislike" EntityType="Self.ReviewLikeDislike" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subscribe" EntityType="Self.Subscribe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TagAppRelation" EntityType="Self.TagAppRelation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TagBlogRelation" EntityType="Self.TagBlogRelation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TempUpload" EntityType="Self.TempUpload" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UploadFileDraft" EntityType="Self.UploadFileDraft" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLatestUpdates" EntityType="Self.UserLatestUpdates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPoint" EntityType="Self.UserPoint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPointSetting" EntityType="Self.UserPointSetting" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Advertise_Payment" Association="Self.FK_Advertise_Payment">
+            <End Role="Payment" EntitySet="Payment" />
+            <End Role="Advertise" EntitySet="Advertise" />
+          </AssociationSet>
           <AssociationSet Name="FK_App_Category" Association="Self.FK_App_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="App" EntitySet="App" />
@@ -567,6 +1098,38 @@
             <End Role="User" EntitySet="User" />
             <End Role="App" EntitySet="App" />
           </AssociationSet>
+          <AssociationSet Name="FK_AppDetail_App" Association="Self.FK_AppDetail_App">
+            <End Role="App" EntitySet="App" />
+            <End Role="AppDetail" EntitySet="AppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blog_BlogCategory" Association="Self.FK_Blog_BlogCategory">
+            <End Role="BlogCategory" EntitySet="BlogCategory" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blog_BlogDetail" Association="Self.FK_Blog_BlogDetail">
+            <End Role="BlogDetail" EntitySet="BlogDetail" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blog_CssStyle" Association="Self.FK_Blog_CssStyle">
+            <End Role="CssStyle" EntitySet="CssStyle" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blog_User" Association="Self.FK_Blog_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogAppRelation_App" Association="Self.FK_BlogAppRelation_App">
+            <End Role="App" EntitySet="App" />
+            <End Role="BlogAppRelation" EntitySet="BlogAppRelation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogAppRelation_Blog" Association="Self.FK_BlogAppRelation_Blog">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="BlogAppRelation" EntitySet="BlogAppRelation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogFile_Blog" Association="Self.FK_BlogFile_Blog">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="BlogFile" EntitySet="BlogFile" />
+          </AssociationSet>
           <AssociationSet Name="FK_CellPhone_Platform" Association="Self.FK_CellPhone_Platform">
             <End Role="Platform" EntitySet="Platform" />
             <End Role="CellPhone" EntitySet="CellPhone" />
@@ -574,6 +1137,10 @@
           <AssociationSet Name="FK_CellPhone_User" Association="Self.FK_CellPhone_User">
             <End Role="User" EntitySet="User" />
             <End Role="CellPhone" EntitySet="CellPhone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CssStyle_CssStyle" Association="Self.FK_CssStyle_CssStyle">
+            <End Role="CssStyle" EntitySet="CssStyle" />
+            <End Role="CssStyle1" EntitySet="CssStyle" />
           </AssociationSet>
           <AssociationSet Name="FK_FeaturedImage_App" Association="Self.FK_FeaturedImage_App">
             <End Role="App" EntitySet="App" />
@@ -587,9 +1154,13 @@
             <End Role="GalleryCategory" EntitySet="GalleryCategory" />
             <End Role="Gallery" EntitySet="Gallery" />
           </AssociationSet>
+          <AssociationSet Name="FK_GenericSettingItem_GenericSetting" Association="Self.FK_GenericSettingItem_GenericSetting">
+            <End Role="GenericSetting" EntitySet="GenericSetting" />
+            <End Role="GenericSettingItem" EntitySet="GenericSettingItem" />
+          </AssociationSet>
           <AssociationSet Name="FK_LatestSeenNotification_User" Association="Self.FK_LatestSeenNotification_User">
             <End Role="User" EntitySet="User" />
-            <End Role="LatestSeenNotification" EntitySet="LatestSeenNotification" />
+            <End Role="NotificationLatest" EntitySet="NotificationLatest" />
           </AssociationSet>
           <AssociationSet Name="FK_Message_User" Association="Self.FK_Message_User">
             <End Role="User" EntitySet="User" />
@@ -610,6 +1181,14 @@
           <AssociationSet Name="FK_Notification_NotificationType" Association="Self.FK_Notification_NotificationType">
             <End Role="NotificationType" EntitySet="NotificationType" />
             <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PaymentMethod" Association="Self.FK_Payment_PaymentMethod">
+            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PaymentType" Association="Self.FK_Payment_PaymentType">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
           <AssociationSet Name="FK_Review_App" Association="Self.FK_Review_App">
             <End Role="App" EntitySet="App" />
@@ -635,6 +1214,30 @@
             <End Role="Tag" EntitySet="Tag" />
             <End Role="TagAppRelation" EntitySet="TagAppRelation" />
           </AssociationSet>
+          <AssociationSet Name="FK_TagBlogRelation_Blog" Association="Self.FK_TagBlogRelation_Blog">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="TagBlogRelation" EntitySet="TagBlogRelation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagBlogRelation_Tag" Association="Self.FK_TagBlogRelation_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="TagBlogRelation" EntitySet="TagBlogRelation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UploadFileDraft_FileType" Association="Self.FK_UploadFileDraft_FileType">
+            <End Role="FileType" EntitySet="FileType" />
+            <End Role="UploadFileDraft" EntitySet="UploadFileDraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UploadFileDraft_GalleryCategory" Association="Self.FK_UploadFileDraft_GalleryCategory">
+            <End Role="GalleryCategory" EntitySet="GalleryCategory" />
+            <End Role="UploadFileDraft" EntitySet="UploadFileDraft" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLatestUpdates_App" Association="Self.FK_UserLatestUpdates_App">
+            <End Role="App" EntitySet="App" />
+            <End Role="UserLatestUpdates" EntitySet="UserLatestUpdates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLatestUpdates_User" Association="Self.FK_UserLatestUpdates_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserLatestUpdates" EntitySet="UserLatestUpdates" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserPoint_User" Association="Self.FK_UserPoint_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserPoint" EntitySet="UserPoint" />
@@ -657,27 +1260,85 @@
           <FunctionImport Name="ResetAppsAndUsers" />
           <FunctionImport Name="ResetReviews" />
           <FunctionImport Name="ResetWholeSystem" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ReviewAppsModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ReviewAppsModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="SplitString" IsComposable="true" ReturnType="Collection(ReviewAppsModel.SplitString_Result)">
+            <Parameter Name="stringToSplit" Mode="In" Type="String" />
+            <Parameter Name="splitChar" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ResetWholeSystemX" />
+          <EntitySet Name="Advertises" EntityType="ReviewAppsModel.Advertise" />
           <EntitySet Name="Apps" EntityType="ReviewAppsModel.App" />
+          <EntitySet Name="AppDetails" EntityType="ReviewAppsModel.AppDetail" />
           <EntitySet Name="AppDrafts" EntityType="ReviewAppsModel.AppDraft" />
+          <EntitySet Name="Blogs" EntityType="ReviewAppsModel.Blog" />
+          <EntitySet Name="BlogAppRelations" EntityType="ReviewAppsModel.BlogAppRelation" />
+          <EntitySet Name="BlogCategories" EntityType="ReviewAppsModel.BlogCategory" />
+          <EntitySet Name="BlogDetails" EntityType="ReviewAppsModel.BlogDetail" />
+          <EntitySet Name="BlogFiles" EntityType="ReviewAppsModel.BlogFile" />
           <EntitySet Name="Categories" EntityType="ReviewAppsModel.Category" />
           <EntitySet Name="CellPhones" EntityType="ReviewAppsModel.CellPhone" />
+          <EntitySet Name="CssStyles" EntityType="ReviewAppsModel.CssStyle" />
           <EntitySet Name="FeaturedImages" EntityType="ReviewAppsModel.FeaturedImage" />
+          <EntitySet Name="FileTypes" EntityType="ReviewAppsModel.FileType" />
           <EntitySet Name="Galleries" EntityType="ReviewAppsModel.Gallery" />
           <EntitySet Name="GalleryCategories" EntityType="ReviewAppsModel.GalleryCategory" />
-          <EntitySet Name="LatestSeenNotifications" EntityType="ReviewAppsModel.LatestSeenNotification" />
+          <EntitySet Name="GenericSettings" EntityType="ReviewAppsModel.GenericSetting" />
+          <EntitySet Name="GenericSettingItems" EntityType="ReviewAppsModel.GenericSettingItem" />
           <EntitySet Name="Messages" EntityType="ReviewAppsModel.Message" />
           <EntitySet Name="MessageSeens" EntityType="ReviewAppsModel.MessageSeen" />
           <EntitySet Name="Notifications" EntityType="ReviewAppsModel.Notification" />
+          <EntitySet Name="NotificationLatests" EntityType="ReviewAppsModel.NotificationLatest" />
           <EntitySet Name="NotificationTypes" EntityType="ReviewAppsModel.NotificationType" />
+          <EntitySet Name="Payments" EntityType="ReviewAppsModel.Payment" />
+          <EntitySet Name="PaymentMethods" EntityType="ReviewAppsModel.PaymentMethod" />
+          <EntitySet Name="PaymentTypes" EntityType="ReviewAppsModel.PaymentType" />
           <EntitySet Name="Platforms" EntityType="ReviewAppsModel.Platform" />
           <EntitySet Name="Reviews" EntityType="ReviewAppsModel.Review" />
           <EntitySet Name="ReviewLikeDislikes" EntityType="ReviewAppsModel.ReviewLikeDislike" />
+          <EntitySet Name="Subscribes" EntityType="ReviewAppsModel.Subscribe" />
+          <EntitySet Name="sysdiagrams" EntityType="ReviewAppsModel.sysdiagram" />
           <EntitySet Name="Tags" EntityType="ReviewAppsModel.Tag" />
           <EntitySet Name="TagAppRelations" EntityType="ReviewAppsModel.TagAppRelation" />
+          <EntitySet Name="TagBlogRelations" EntityType="ReviewAppsModel.TagBlogRelation" />
           <EntitySet Name="TempUploads" EntityType="ReviewAppsModel.TempUpload" />
+          <EntitySet Name="UploadFileDrafts" EntityType="ReviewAppsModel.UploadFileDraft" />
           <EntitySet Name="Users" EntityType="ReviewAppsModel.User" />
+          <EntitySet Name="UserLatestUpdates" EntityType="ReviewAppsModel.UserLatestUpdate" />
           <EntitySet Name="UserPoints" EntityType="ReviewAppsModel.UserPoint" />
           <EntitySet Name="UserPointSettings" EntityType="ReviewAppsModel.UserPointSetting" />
+          <AssociationSet Name="FK_Advertise_Payment" Association="ReviewAppsModel.FK_Advertise_Payment">
+            <End Role="Payment" EntitySet="Payments" />
+            <End Role="Advertise" EntitySet="Advertises" />
+          </AssociationSet>
           <AssociationSet Name="FK_App_Category" Association="ReviewAppsModel.FK_App_Category">
             <End Role="Category" EntitySet="Categories" />
             <End Role="App" EntitySet="Apps" />
@@ -689,6 +1350,14 @@
           <AssociationSet Name="FK_App_User" Association="ReviewAppsModel.FK_App_User">
             <End Role="User" EntitySet="Users" />
             <End Role="App" EntitySet="Apps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppDetail_App" Association="ReviewAppsModel.FK_AppDetail_App">
+            <End Role="App" EntitySet="Apps" />
+            <End Role="AppDetail" EntitySet="AppDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogAppRelation_App" Association="ReviewAppsModel.FK_BlogAppRelation_App">
+            <End Role="App" EntitySet="Apps" />
+            <End Role="BlogAppRelation" EntitySet="BlogAppRelations" />
           </AssociationSet>
           <AssociationSet Name="FK_FeaturedImage_App" Association="ReviewAppsModel.FK_FeaturedImage_App">
             <End Role="App" EntitySet="Apps" />
@@ -702,6 +1371,38 @@
             <End Role="App" EntitySet="Apps" />
             <End Role="TagAppRelation" EntitySet="TagAppRelations" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserLatestUpdates_App" Association="ReviewAppsModel.FK_UserLatestUpdates_App">
+            <End Role="App" EntitySet="Apps" />
+            <End Role="UserLatestUpdate" EntitySet="UserLatestUpdates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blog_BlogCategory" Association="ReviewAppsModel.FK_Blog_BlogCategory">
+            <End Role="BlogCategory" EntitySet="BlogCategories" />
+            <End Role="Blog" EntitySet="Blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blog_BlogDetail" Association="ReviewAppsModel.FK_Blog_BlogDetail">
+            <End Role="BlogDetail" EntitySet="BlogDetails" />
+            <End Role="Blog" EntitySet="Blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blog_CssStyle" Association="ReviewAppsModel.FK_Blog_CssStyle">
+            <End Role="CssStyle" EntitySet="CssStyles" />
+            <End Role="Blog" EntitySet="Blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blog_User" Association="ReviewAppsModel.FK_Blog_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Blog" EntitySet="Blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogAppRelation_Blog" Association="ReviewAppsModel.FK_BlogAppRelation_Blog">
+            <End Role="Blog" EntitySet="Blogs" />
+            <End Role="BlogAppRelation" EntitySet="BlogAppRelations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogFile_Blog" Association="ReviewAppsModel.FK_BlogFile_Blog">
+            <End Role="Blog" EntitySet="Blogs" />
+            <End Role="BlogFile" EntitySet="BlogFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagBlogRelation_Blog" Association="ReviewAppsModel.FK_TagBlogRelation_Blog">
+            <End Role="Blog" EntitySet="Blogs" />
+            <End Role="TagBlogRelation" EntitySet="TagBlogRelations" />
+          </AssociationSet>
           <AssociationSet Name="FK_CellPhone_Platform" Association="ReviewAppsModel.FK_CellPhone_Platform">
             <End Role="Platform" EntitySet="Platforms" />
             <End Role="CellPhone" EntitySet="CellPhones" />
@@ -710,17 +1411,29 @@
             <End Role="User" EntitySet="Users" />
             <End Role="CellPhone" EntitySet="CellPhones" />
           </AssociationSet>
+          <AssociationSet Name="FK_CssStyle_CssStyle" Association="ReviewAppsModel.FK_CssStyle_CssStyle">
+            <End Role="CssStyle" EntitySet="CssStyles" />
+            <End Role="CssStyle1" EntitySet="CssStyles" />
+          </AssociationSet>
           <AssociationSet Name="FK_FeaturedImage_User" Association="ReviewAppsModel.FK_FeaturedImage_User">
             <End Role="User" EntitySet="Users" />
             <End Role="FeaturedImage" EntitySet="FeaturedImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UploadFileDraft_FileType" Association="ReviewAppsModel.FK_UploadFileDraft_FileType">
+            <End Role="FileType" EntitySet="FileTypes" />
+            <End Role="UploadFileDraft" EntitySet="UploadFileDrafts" />
           </AssociationSet>
           <AssociationSet Name="FK_Gallery_GalleryCategory" Association="ReviewAppsModel.FK_Gallery_GalleryCategory">
             <End Role="GalleryCategory" EntitySet="GalleryCategories" />
             <End Role="Gallery" EntitySet="Galleries" />
           </AssociationSet>
-          <AssociationSet Name="FK_LatestSeenNotification_User" Association="ReviewAppsModel.FK_LatestSeenNotification_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="LatestSeenNotification" EntitySet="LatestSeenNotifications" />
+          <AssociationSet Name="FK_UploadFileDraft_GalleryCategory" Association="ReviewAppsModel.FK_UploadFileDraft_GalleryCategory">
+            <End Role="GalleryCategory" EntitySet="GalleryCategories" />
+            <End Role="UploadFileDraft" EntitySet="UploadFileDrafts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GenericSettingItem_GenericSetting" Association="ReviewAppsModel.FK_GenericSettingItem_GenericSetting">
+            <End Role="GenericSetting" EntitySet="GenericSettings" />
+            <End Role="GenericSettingItem" EntitySet="GenericSettingItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Message_User" Association="ReviewAppsModel.FK_Message_User">
             <End Role="User" EntitySet="Users" />
@@ -742,6 +1455,18 @@
             <End Role="NotificationType" EntitySet="NotificationTypes" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
+          <AssociationSet Name="FK_LatestSeenNotification_User" Association="ReviewAppsModel.FK_LatestSeenNotification_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="NotificationLatest" EntitySet="NotificationLatests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PaymentMethod" Association="ReviewAppsModel.FK_Payment_PaymentMethod">
+            <End Role="PaymentMethod" EntitySet="PaymentMethods" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PaymentType" Association="ReviewAppsModel.FK_Payment_PaymentType">
+            <End Role="PaymentType" EntitySet="PaymentTypes" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Review_User" Association="ReviewAppsModel.FK_Review_User">
             <End Role="User" EntitySet="Users" />
             <End Role="Review" EntitySet="Reviews" />
@@ -758,6 +1483,14 @@
             <End Role="Tag" EntitySet="Tags" />
             <End Role="TagAppRelation" EntitySet="TagAppRelations" />
           </AssociationSet>
+          <AssociationSet Name="FK_TagBlogRelation_Tag" Association="ReviewAppsModel.FK_TagBlogRelation_Tag">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="TagBlogRelation" EntitySet="TagBlogRelations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLatestUpdates_User" Association="ReviewAppsModel.FK_UserLatestUpdates_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserLatestUpdate" EntitySet="UserLatestUpdates" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserPoint_User" Association="ReviewAppsModel.FK_UserPoint_User">
             <End Role="User" EntitySet="Users" />
             <End Role="UserPoint" EntitySet="UserPoints" />
@@ -766,11 +1499,43 @@
             <End Role="UserPointSetting" EntitySet="UserPointSettings" />
             <End Role="UserPoint" EntitySet="UserPoints" />
           </AssociationSet>
+          <FunctionImport Name="GetSha2561" IsComposable="true" ReturnType="Collection(Binary)">
+            <Parameter Name="str" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AppsSearch_Result">
           <Property Type="Int32" Name="ID" Nullable="true" />
           <Property Type="String" Name="Name" Nullable="true" MaxLength="500" />
         </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SplitString_Result">
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <EntityType Name="Advertise">
+          <Key>
+            <PropertyRef Name="AdvertiseID" />
+          </Key>
+          <Property Name="AdvertiseID" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Subtitle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="PublishAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="EndAt" Type="DateTime" Precision="7" />
+          <Property Name="IsLifeTime" Type="Boolean" Nullable="false" />
+          <Property Name="PaymentID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Payment" Relationship="ReviewAppsModel.FK_Advertise_Payment" FromRole="Advertise" ToRole="Payment" />
+        </EntityType>
         <EntityType Name="App">
           <Key>
             <PropertyRef Name="AppID" />
@@ -781,7 +1546,7 @@
           <Property Name="PlatformVersion" Type="Double" Nullable="false" />
           <Property Name="CategoryID" Type="Int16" Nullable="false" />
           <Property Name="Url" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="PostedByUserID" Type="Int64" Nullable="false" />
           <Property Name="ReviewsCount" Type="Int16" Nullable="false" />
           <Property Name="IsVideoExist" Type="Boolean" Nullable="false" />
@@ -799,12 +1564,30 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="LastModifiedDate" Type="DateTime" Precision="0" />
           <Property Name="UrlWithoutEscapseSequence" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="IsDetailPresent" Type="Boolean" Nullable="false" />
+          <Property Name="PublishAt" Type="DateTime" Precision="0" />
+          <Property Name="IsPublishAtScheduledTime" Type="Boolean" Nullable="false" />
+          <Property Name="SHA256" Type="Binary" Nullable="false" MaxLength="33" FixedLength="true" />
+          <Property Name="PriceInUSD" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
           <NavigationProperty Name="Category" Relationship="ReviewAppsModel.FK_App_Category" FromRole="App" ToRole="Category" />
           <NavigationProperty Name="Platform" Relationship="ReviewAppsModel.FK_App_Platform" FromRole="App" ToRole="Platform" />
           <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_App_User" FromRole="App" ToRole="User" />
+          <NavigationProperty Name="AppDetail" Relationship="ReviewAppsModel.FK_AppDetail_App" FromRole="App" ToRole="AppDetail" />
+          <NavigationProperty Name="BlogAppRelations" Relationship="ReviewAppsModel.FK_BlogAppRelation_App" FromRole="App" ToRole="BlogAppRelation" />
           <NavigationProperty Name="FeaturedImages" Relationship="ReviewAppsModel.FK_FeaturedImage_App" FromRole="App" ToRole="FeaturedImage" />
           <NavigationProperty Name="Reviews" Relationship="ReviewAppsModel.FK_Review_App" FromRole="App" ToRole="Review" />
           <NavigationProperty Name="TagAppRelations" Relationship="ReviewAppsModel.FK_TagAppRelation_App" FromRole="App" ToRole="TagAppRelation" />
+          <NavigationProperty Name="UserLatestUpdates" Relationship="ReviewAppsModel.FK_UserLatestUpdates_App" FromRole="App" ToRole="UserLatestUpdate" />
+        </EntityType>
+        <EntityType Name="AppDetail">
+          <Key>
+            <PropertyRef Name="AppDetailID" />
+          </Key>
+          <Property Name="AppDetailID" Type="Int64" Nullable="false" />
+          <Property Name="DescriptionInHTML1" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionInHTML2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionInHTML3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="App" Relationship="ReviewAppsModel.FK_AppDetail_App" FromRole="AppDetail" ToRole="App" />
         </EntityType>
         <EntityType Name="AppDraft">
           <Key>
@@ -829,6 +1612,83 @@
           <Property Name="Url" Type="String" MaxLength="65" FixedLength="false" Unicode="false" />
           <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="BlogID" />
+          </Key>
+          <Property Name="BlogID" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Article" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="ContainsFiles" Type="Boolean" Nullable="false" />
+          <Property Name="BlogCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="IsDraft" Type="Boolean" Nullable="false" />
+          <Property Name="PublishedAt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DraftAt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ReportedCount" Type="Int16" Nullable="false" />
+          <Property Name="ViewsCount" Type="Int64" Nullable="false" />
+          <Property Name="LikedCount" Type="Int64" Nullable="false" />
+          <Property Name="DislikedCount" Type="Int64" Nullable="false" />
+          <Property Name="IsGalleryPresent" Type="Boolean" Nullable="false" />
+          <Property Name="TakeOffAfter" Type="DateTime" Precision="0" />
+          <Property Name="CssStyleID" Type="Int16" />
+          <Property Name="Tags" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Slug" Type="String" Nullable="false" MaxLength="220" FixedLength="false" Unicode="true" />
+          <Property Name="SHA256" Type="Binary" Nullable="false" MaxLength="32" FixedLength="false" />
+          <NavigationProperty Name="BlogCategory" Relationship="ReviewAppsModel.FK_Blog_BlogCategory" FromRole="Blog" ToRole="BlogCategory" />
+          <NavigationProperty Name="BlogDetail" Relationship="ReviewAppsModel.FK_Blog_BlogDetail" FromRole="Blog" ToRole="BlogDetail" />
+          <NavigationProperty Name="CssStyle" Relationship="ReviewAppsModel.FK_Blog_CssStyle" FromRole="Blog" ToRole="CssStyle" />
+          <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_Blog_User" FromRole="Blog" ToRole="User" />
+          <NavigationProperty Name="BlogAppRelations" Relationship="ReviewAppsModel.FK_BlogAppRelation_Blog" FromRole="Blog" ToRole="BlogAppRelation" />
+          <NavigationProperty Name="BlogFiles" Relationship="ReviewAppsModel.FK_BlogFile_Blog" FromRole="Blog" ToRole="BlogFile" />
+          <NavigationProperty Name="TagBlogRelations" Relationship="ReviewAppsModel.FK_TagBlogRelation_Blog" FromRole="Blog" ToRole="TagBlogRelation" />
+        </EntityType>
+        <EntityType Name="BlogAppRelation">
+          <Key>
+            <PropertyRef Name="BlogAppRelationID" />
+          </Key>
+          <Property Name="BlogAppRelationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogID" Type="Int64" Nullable="false" />
+          <Property Name="AppID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="App" Relationship="ReviewAppsModel.FK_BlogAppRelation_App" FromRole="BlogAppRelation" ToRole="App" />
+          <NavigationProperty Name="Blog" Relationship="ReviewAppsModel.FK_BlogAppRelation_Blog" FromRole="BlogAppRelation" ToRole="Blog" />
+        </EntityType>
+        <EntityType Name="BlogCategory">
+          <Key>
+            <PropertyRef Name="BlogCategoryID" />
+          </Key>
+          <Property Name="BlogCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="BlogCategoryName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Slug" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsCore" Type="Boolean" Nullable="false" />
+          <Property Name="IsFileType" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Blogs" Relationship="ReviewAppsModel.FK_Blog_BlogCategory" FromRole="BlogCategory" ToRole="Blog" />
+        </EntityType>
+        <EntityType Name="BlogDetail">
+          <Key>
+            <PropertyRef Name="BlogDetailID" />
+          </Key>
+          <Property Name="BlogDetailID" Type="Int64" Nullable="false" />
+          <Property Name="Detail1" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="Detail2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Detail3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Detail4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Detail5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Blog" Relationship="ReviewAppsModel.FK_Blog_BlogDetail" FromRole="BlogDetail" ToRole="Blog" />
+        </EntityType>
+        <EntityType Name="BlogFile">
+          <Key>
+            <PropertyRef Name="BlogFilesID" />
+          </Key>
+          <Property Name="BlogFilesID" Type="Guid" Nullable="false" />
+          <Property Name="BlogID" Type="Int64" Nullable="false" />
+          <Property Name="GalleryID" Type="Guid" />
+          <Property Name="IsLink" Type="Boolean" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Blog" Relationship="ReviewAppsModel.FK_BlogFile_Blog" FromRole="BlogFile" ToRole="Blog" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -849,6 +1709,22 @@
           <NavigationProperty Name="Platform" Relationship="ReviewAppsModel.FK_CellPhone_Platform" FromRole="CellPhone" ToRole="Platform" />
           <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_CellPhone_User" FromRole="CellPhone" ToRole="User" />
         </EntityType>
+        <EntityType Name="CssStyle">
+          <Key>
+            <PropertyRef Name="CssStyleID" />
+          </Key>
+          <Property Name="CssStyleID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CssName" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Style1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Style2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Style3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Style4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ParentStyleID" Type="Int16" />
+          <Property Name="IsCompiled" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Blogs" Relationship="ReviewAppsModel.FK_Blog_CssStyle" FromRole="CssStyle" ToRole="Blog" />
+          <NavigationProperty Name="CssStyle1" Relationship="ReviewAppsModel.FK_CssStyle_CssStyle" FromRole="CssStyle" ToRole="CssStyle1" />
+          <NavigationProperty Name="CssStyle2" Relationship="ReviewAppsModel.FK_CssStyle_CssStyle" FromRole="CssStyle1" ToRole="CssStyle" />
+        </EntityType>
         <EntityType Name="FeaturedImage">
           <Key>
             <PropertyRef Name="FeaturedImageID" />
@@ -859,6 +1735,14 @@
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="App" Relationship="ReviewAppsModel.FK_FeaturedImage_App" FromRole="FeaturedImage" ToRole="App" />
           <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_FeaturedImage_User" FromRole="FeaturedImage" ToRole="User" />
+        </EntityType>
+        <EntityType Name="FileType">
+          <Key>
+            <PropertyRef Name="FileTypeID" />
+          </Key>
+          <Property Name="FileTypeID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UploadFileDrafts" Relationship="ReviewAppsModel.FK_UploadFileDraft_FileType" FromRole="FileType" ToRole="UploadFileDraft" />
         </EntityType>
         <EntityType Name="Gallery">
           <Key>
@@ -883,28 +1767,36 @@
           <Property Name="Height" Type="Double" Nullable="false" />
           <Property Name="IsAdvertise" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Galleries" Relationship="ReviewAppsModel.FK_Gallery_GalleryCategory" FromRole="GalleryCategory" ToRole="Gallery" />
+          <NavigationProperty Name="UploadFileDrafts" Relationship="ReviewAppsModel.FK_UploadFileDraft_GalleryCategory" FromRole="GalleryCategory" ToRole="UploadFileDraft" />
         </EntityType>
-        <EntityType Name="LatestSeenNotification">
+        <EntityType Name="GenericSetting">
           <Key>
-            <PropertyRef Name="LatestSeenNotificationID" />
+            <PropertyRef Name="GenericSettingID" />
           </Key>
-          <Property Name="LatestSeenNotificationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int64" Nullable="false" />
-          <Property Name="NotificationTypeID" Type="Byte" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Dated" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_LatestSeenNotification_User" FromRole="LatestSeenNotification" ToRole="User" />
+          <Property Name="GenericSettingID" Type="Int64" Nullable="false" />
+          <Property Name="SettingName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GenericSettingItems" Relationship="ReviewAppsModel.FK_GenericSettingItem_GenericSetting" FromRole="GenericSetting" ToRole="GenericSettingItem" />
+        </EntityType>
+        <EntityType Name="GenericSettingItem">
+          <Key>
+            <PropertyRef Name="GenericSettingItemID" />
+          </Key>
+          <Property Name="GenericSettingItemID" Type="Int64" Nullable="false" />
+          <Property Name="GenericSettingID" Type="Int64" Nullable="false" />
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GenericSetting" Relationship="ReviewAppsModel.FK_GenericSettingItem_GenericSetting" FromRole="GenericSettingItem" ToRole="GenericSetting" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
             <PropertyRef Name="MessageID" />
           </Key>
           <Property Name="MessageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Msg1" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Msg2" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Msg3" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Msg4" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="MessageDisplay" Type="String" Nullable="false" MaxLength="1200" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Msg1" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Msg2" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Msg3" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Msg4" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="MessageDisplay" Type="String" Nullable="false" MaxLength="1200" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="SenderUserID" Type="Int64" Nullable="false" />
           <Property Name="ReceiverUserID" Type="Int64" Nullable="false" />
           <Property Name="IsDraft" Type="Boolean" Nullable="false" />
@@ -920,17 +1812,18 @@
             <PropertyRef Name="MessageSeenID" />
           </Key>
           <Property Name="MessageSeenID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Msg1" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Msg2" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Msg3" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Msg4" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="MessageDisplay" Type="String" Nullable="false" MaxLength="1200" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Msg1" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Msg2" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Msg3" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Msg4" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="MessageDisplay" Type="String" Nullable="false" MaxLength="1200" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="SenderUserID" Type="Int64" Nullable="false" />
           <Property Name="ReceiverUserID" Type="Int64" Nullable="false" />
           <Property Name="IsDraft" Type="Boolean" Nullable="false" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SentDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ReceivedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MessageIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_MessageSeen_User" FromRole="MessageSeen" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="ReviewAppsModel.FK_MessageSeen_User1" FromRole="MessageSeen" ToRole="User" />
         </EntityType>
@@ -941,9 +1834,26 @@
           <Property Name="NotificationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="NotificationTypeID" Type="Byte" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Dated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FromUserID" Type="Int64" />
+          <Property Name="IsGeneratedFromSystem" Type="Boolean" Nullable="false" />
+          <Property Name="IsSeen" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="NotificationType" Relationship="ReviewAppsModel.FK_Notification_NotificationType" FromRole="Notification" ToRole="NotificationType" />
+        </EntityType>
+        <EntityType Name="NotificationLatest">
+          <Key>
+            <PropertyRef Name="LatestSeenNotificationID" />
+          </Key>
+          <Property Name="LatestSeenNotificationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="NotificationTypeID" Type="Byte" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Dated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FromUserID" Type="Int64" />
+          <Property Name="IsGeneratedFromSystem" Type="Boolean" Nullable="false" />
+          <Property Name="IsSeen" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_LatestSeenNotification_User" FromRole="NotificationLatest" ToRole="User" />
         </EntityType>
         <EntityType Name="NotificationType">
           <Key>
@@ -953,7 +1863,41 @@
           <Property Name="TypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IsGood" Type="Boolean" Nullable="false" />
           <Property Name="DefaultMessage" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LabelColor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Notifications" Relationship="ReviewAppsModel.FK_Notification_NotificationType" FromRole="NotificationType" ToRole="Notification" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentMethodID" Type="Int16" Nullable="false" />
+          <Property Name="PurposeText" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="Dated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ByUserID" Type="Int64" Nullable="false" />
+          <Property Name="PaymentTypeID" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Advertises" Relationship="ReviewAppsModel.FK_Advertise_Payment" FromRole="Payment" ToRole="Advertise" />
+          <NavigationProperty Name="PaymentMethod" Relationship="ReviewAppsModel.FK_Payment_PaymentMethod" FromRole="Payment" ToRole="PaymentMethod" />
+          <NavigationProperty Name="PaymentType" Relationship="ReviewAppsModel.FK_Payment_PaymentType" FromRole="Payment" ToRole="PaymentType" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodID" />
+          </Key>
+          <Property Name="PaymentMethodID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MethodName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AuthPass" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AuthID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Payments" Relationship="ReviewAppsModel.FK_Payment_PaymentMethod" FromRole="PaymentMethod" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeID" />
+          </Key>
+          <Property Name="PaymentTypeID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentType1" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Payments" Relationship="ReviewAppsModel.FK_Payment_PaymentType" FromRole="PaymentType" ToRole="Payment" />
         </EntityType>
         <EntityType Name="Platform">
           <Key>
@@ -1000,6 +1944,29 @@
           <NavigationProperty Name="Review" Relationship="ReviewAppsModel.FK_ReviewLikeDislike_Review" FromRole="ReviewLikeDislike" ToRole="Review" />
           <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_ReviewLikeDislike_User" FromRole="ReviewLikeDislike" ToRole="User" />
         </EntityType>
+        <EntityType Name="Subscribe">
+          <Key>
+            <PropertyRef Name="SubscribeID" />
+          </Key>
+          <Property Name="SubscribeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubscribedByUserID" Type="Int64" />
+          <Property Name="SubscribedToUserID" Type="Int64" Nullable="false" />
+          <Property Name="SubscribedByEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsSubscribedByUser" Type="Boolean" Nullable="false" />
+          <Property Name="IsSubscribedByNonUser" Type="Boolean" Nullable="false" />
+          <Property Name="MailsSend" Type="Int64" Nullable="false" />
+          <Property Name="LastSendAt" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="Tag">
           <Key>
             <PropertyRef Name="TagID" />
@@ -1007,6 +1974,7 @@
           <Property Name="TagID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TagDisplay" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TagAppRelations" Relationship="ReviewAppsModel.FK_TagAppRelation_Tag" FromRole="Tag" ToRole="TagAppRelation" />
+          <NavigationProperty Name="TagBlogRelations" Relationship="ReviewAppsModel.FK_TagBlogRelation_Tag" FromRole="Tag" ToRole="TagBlogRelation" />
         </EntityType>
         <EntityType Name="TagAppRelation">
           <Key>
@@ -1018,6 +1986,16 @@
           <NavigationProperty Name="App" Relationship="ReviewAppsModel.FK_TagAppRelation_App" FromRole="TagAppRelation" ToRole="App" />
           <NavigationProperty Name="Tag" Relationship="ReviewAppsModel.FK_TagAppRelation_Tag" FromRole="TagAppRelation" ToRole="Tag" />
         </EntityType>
+        <EntityType Name="TagBlogRelation">
+          <Key>
+            <PropertyRef Name="TagBlogRelationID" />
+          </Key>
+          <Property Name="TagBlogRelationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagID" Type="Int64" Nullable="false" />
+          <Property Name="BlogID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Blog" Relationship="ReviewAppsModel.FK_TagBlogRelation_Blog" FromRole="TagBlogRelation" ToRole="Blog" />
+          <NavigationProperty Name="Tag" Relationship="ReviewAppsModel.FK_TagBlogRelation_Tag" FromRole="TagBlogRelation" ToRole="Tag" />
+        </EntityType>
         <EntityType Name="TempUpload">
           <Key>
             <PropertyRef Name="TempUploadID" />
@@ -1027,6 +2005,20 @@
           <Property Name="AppID" Type="Int64" />
           <Property Name="GalleryID" Type="Guid" Nullable="false" />
           <Property Name="RelatingUploadGuidForDelete" Type="Guid" />
+        </EntityType>
+        <EntityType Name="UploadFileDraft">
+          <Key>
+            <PropertyRef Name="UploadFileDraftID" />
+          </Key>
+          <Property Name="UploadFileDraftID" Type="Guid" Nullable="false" />
+          <Property Name="Dated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UseID" Type="Int64" />
+          <Property Name="GalleryCategoryID" Type="Int32" />
+          <Property Name="IsUsed" Type="Boolean" Nullable="false" />
+          <Property Name="FileTypeID" Type="Int16" Nullable="false" />
+          <Property Name="FileSizeMB" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="FileType" Relationship="ReviewAppsModel.FK_UploadFileDraft_FileType" FromRole="UploadFileDraft" ToRole="FileType" />
+          <NavigationProperty Name="GalleryCategory" Relationship="ReviewAppsModel.FK_UploadFileDraft_GalleryCategory" FromRole="UploadFileDraft" ToRole="GalleryCategory" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1039,16 +2031,31 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="TotalEarnedPoints" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Apps" Relationship="ReviewAppsModel.FK_App_User" FromRole="User" ToRole="App" />
+          <NavigationProperty Name="Blogs" Relationship="ReviewAppsModel.FK_Blog_User" FromRole="User" ToRole="Blog" />
           <NavigationProperty Name="CellPhones" Relationship="ReviewAppsModel.FK_CellPhone_User" FromRole="User" ToRole="CellPhone" />
           <NavigationProperty Name="FeaturedImages" Relationship="ReviewAppsModel.FK_FeaturedImage_User" FromRole="User" ToRole="FeaturedImage" />
-          <NavigationProperty Name="LatestSeenNotifications" Relationship="ReviewAppsModel.FK_LatestSeenNotification_User" FromRole="User" ToRole="LatestSeenNotification" />
           <NavigationProperty Name="Messages" Relationship="ReviewAppsModel.FK_Message_User" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="Messages1" Relationship="ReviewAppsModel.FK_Message_User1" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="MessageSeens" Relationship="ReviewAppsModel.FK_MessageSeen_User" FromRole="User" ToRole="MessageSeen" />
           <NavigationProperty Name="MessageSeens1" Relationship="ReviewAppsModel.FK_MessageSeen_User1" FromRole="User" ToRole="MessageSeen" />
+          <NavigationProperty Name="NotificationLatests" Relationship="ReviewAppsModel.FK_LatestSeenNotification_User" FromRole="User" ToRole="NotificationLatest" />
           <NavigationProperty Name="Reviews" Relationship="ReviewAppsModel.FK_Review_User" FromRole="User" ToRole="Review" />
           <NavigationProperty Name="ReviewLikeDislikes" Relationship="ReviewAppsModel.FK_ReviewLikeDislike_User" FromRole="User" ToRole="ReviewLikeDislike" />
+          <NavigationProperty Name="UserLatestUpdates" Relationship="ReviewAppsModel.FK_UserLatestUpdates_User" FromRole="User" ToRole="UserLatestUpdate" />
           <NavigationProperty Name="UserPoints" Relationship="ReviewAppsModel.FK_UserPoint_User" FromRole="User" ToRole="UserPoint" />
+        </EntityType>
+        <EntityType Name="UserLatestUpdate">
+          <Key>
+            <PropertyRef Name="UserLatestUpdatesID" />
+          </Key>
+          <Property Name="UserLatestUpdatesID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogID" Type="Int64" />
+          <Property Name="AppID" Type="Int64" />
+          <Property Name="IsSendToSubscriber" Type="Boolean" Nullable="false" />
+          <Property Name="AddedAt" Type="DateTime" Precision="0" />
+          <Property Name="ByUserID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="App" Relationship="ReviewAppsModel.FK_UserLatestUpdates_App" FromRole="UserLatestUpdate" ToRole="App" />
+          <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_UserLatestUpdates_User" FromRole="UserLatestUpdate" ToRole="User" />
         </EntityType>
         <EntityType Name="UserPoint">
           <Key>
@@ -1071,6 +2078,18 @@
           <Property Name="Point" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UserPoints" Relationship="ReviewAppsModel.FK_UserPoint_UserPointSetting" FromRole="UserPointSetting" ToRole="UserPoint" />
         </EntityType>
+        <Association Name="FK_Advertise_Payment">
+          <End Type="ReviewAppsModel.Payment" Role="Payment" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Advertise" Role="Advertise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="PaymentID" />
+            </Principal>
+            <Dependent Role="Advertise">
+              <PropertyRef Name="PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_App_Category">
           <End Type="ReviewAppsModel.Category" Role="Category" Multiplicity="1" />
           <End Type="ReviewAppsModel.App" Role="App" Multiplicity="*" />
@@ -1104,6 +2123,30 @@
             </Principal>
             <Dependent Role="App">
               <PropertyRef Name="PostedByUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppDetail_App">
+          <End Type="ReviewAppsModel.App" Role="App" Multiplicity="1" />
+          <End Type="ReviewAppsModel.AppDetail" Role="AppDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="App">
+              <PropertyRef Name="AppID" />
+            </Principal>
+            <Dependent Role="AppDetail">
+              <PropertyRef Name="AppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogAppRelation_App">
+          <End Type="ReviewAppsModel.App" Role="App" Multiplicity="1" />
+          <End Type="ReviewAppsModel.BlogAppRelation" Role="BlogAppRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="App">
+              <PropertyRef Name="AppID" />
+            </Principal>
+            <Dependent Role="BlogAppRelation">
+              <PropertyRef Name="AppID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1143,6 +2186,102 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserLatestUpdates_App">
+          <End Type="ReviewAppsModel.App" Role="App" Multiplicity="0..1" />
+          <End Type="ReviewAppsModel.UserLatestUpdate" Role="UserLatestUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="App">
+              <PropertyRef Name="AppID" />
+            </Principal>
+            <Dependent Role="UserLatestUpdate">
+              <PropertyRef Name="AppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blog_BlogCategory">
+          <End Type="ReviewAppsModel.BlogCategory" Role="BlogCategory" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Blog" Role="Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogCategory">
+              <PropertyRef Name="BlogCategoryID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="BlogCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blog_BlogDetail">
+          <End Type="ReviewAppsModel.BlogDetail" Role="BlogDetail" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Blog" Role="Blog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="BlogDetail">
+              <PropertyRef Name="BlogDetailID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blog_CssStyle">
+          <End Type="ReviewAppsModel.CssStyle" Role="CssStyle" Multiplicity="0..1" />
+          <End Type="ReviewAppsModel.Blog" Role="Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CssStyle">
+              <PropertyRef Name="CssStyleID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="CssStyleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blog_User">
+          <End Type="ReviewAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Blog" Role="Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogAppRelation_Blog">
+          <End Type="ReviewAppsModel.Blog" Role="Blog" Multiplicity="1" />
+          <End Type="ReviewAppsModel.BlogAppRelation" Role="BlogAppRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="BlogAppRelation">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogFile_Blog">
+          <End Type="ReviewAppsModel.Blog" Role="Blog" Multiplicity="1" />
+          <End Type="ReviewAppsModel.BlogFile" Role="BlogFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="BlogFile">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagBlogRelation_Blog">
+          <End Type="ReviewAppsModel.Blog" Role="Blog" Multiplicity="1" />
+          <End Type="ReviewAppsModel.TagBlogRelation" Role="TagBlogRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="TagBlogRelation">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CellPhone_Platform">
           <End Type="ReviewAppsModel.Platform" Role="Platform" Multiplicity="1" />
           <End Type="ReviewAppsModel.CellPhone" Role="CellPhone" Multiplicity="*" />
@@ -1167,6 +2306,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CssStyle_CssStyle">
+          <End Type="ReviewAppsModel.CssStyle" Role="CssStyle" Multiplicity="0..1" />
+          <End Type="ReviewAppsModel.CssStyle" Role="CssStyle1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CssStyle">
+              <PropertyRef Name="CssStyleID" />
+            </Principal>
+            <Dependent Role="CssStyle1">
+              <PropertyRef Name="ParentStyleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FeaturedImage_User">
           <End Type="ReviewAppsModel.User" Role="User" Multiplicity="1" />
           <End Type="ReviewAppsModel.FeaturedImage" Role="FeaturedImage" Multiplicity="*" />
@@ -1176,6 +2327,18 @@
             </Principal>
             <Dependent Role="FeaturedImage">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UploadFileDraft_FileType">
+          <End Type="ReviewAppsModel.FileType" Role="FileType" Multiplicity="1" />
+          <End Type="ReviewAppsModel.UploadFileDraft" Role="UploadFileDraft" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileType">
+              <PropertyRef Name="FileTypeID" />
+            </Principal>
+            <Dependent Role="UploadFileDraft">
+              <PropertyRef Name="FileTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1191,15 +2354,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LatestSeenNotification_User">
-          <End Type="ReviewAppsModel.User" Role="User" Multiplicity="1" />
-          <End Type="ReviewAppsModel.LatestSeenNotification" Role="LatestSeenNotification" Multiplicity="*" />
+        <Association Name="FK_UploadFileDraft_GalleryCategory">
+          <End Type="ReviewAppsModel.GalleryCategory" Role="GalleryCategory" Multiplicity="0..1" />
+          <End Type="ReviewAppsModel.UploadFileDraft" Role="UploadFileDraft" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
+            <Principal Role="GalleryCategory">
+              <PropertyRef Name="GalleryCategoryID" />
             </Principal>
-            <Dependent Role="LatestSeenNotification">
-              <PropertyRef Name="UserID" />
+            <Dependent Role="UploadFileDraft">
+              <PropertyRef Name="GalleryCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GenericSettingItem_GenericSetting">
+          <End Type="ReviewAppsModel.GenericSetting" Role="GenericSetting" Multiplicity="1" />
+          <End Type="ReviewAppsModel.GenericSettingItem" Role="GenericSettingItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GenericSetting">
+              <PropertyRef Name="GenericSettingID" />
+            </Principal>
+            <Dependent Role="GenericSettingItem">
+              <PropertyRef Name="GenericSettingID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1263,6 +2438,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LatestSeenNotification_User">
+          <End Type="ReviewAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="ReviewAppsModel.NotificationLatest" Role="NotificationLatest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="NotificationLatest">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PaymentMethod">
+          <End Type="ReviewAppsModel.PaymentMethod" Role="PaymentMethod" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PaymentType">
+          <End Type="ReviewAppsModel.PaymentType" Role="PaymentType" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Review_User">
           <End Type="ReviewAppsModel.User" Role="User" Multiplicity="1" />
           <End Type="ReviewAppsModel.Review" Role="Review" Multiplicity="*" />
@@ -1311,6 +2522,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TagBlogRelation_Tag">
+          <End Type="ReviewAppsModel.Tag" Role="Tag" Multiplicity="1" />
+          <End Type="ReviewAppsModel.TagBlogRelation" Role="TagBlogRelation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagID" />
+            </Principal>
+            <Dependent Role="TagBlogRelation">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLatestUpdates_User">
+          <End Type="ReviewAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="ReviewAppsModel.UserLatestUpdate" Role="UserLatestUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserLatestUpdate">
+              <PropertyRef Name="ByUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserPoint_User">
           <End Type="ReviewAppsModel.User" Role="User" Multiplicity="1" />
           <End Type="ReviewAppsModel.UserPoint" Role="UserPoint" Multiplicity="*" />
@@ -1354,9 +2589,61 @@
           <FunctionImportMapping FunctionImportName="ResetAppsAndUsers" FunctionName="ReviewAppsModel.Store.ResetAppsAndUsers" />
           <FunctionImportMapping FunctionImportName="ResetReviews" FunctionName="ReviewAppsModel.Store.ResetReviews" />
           <FunctionImportMapping FunctionImportName="ResetWholeSystem" FunctionName="ReviewAppsModel.Store.ResetWholeSystem" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ReviewAppsModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ReviewAppsModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ReviewAppsModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ReviewAppsModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewAppsModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ReviewAppsModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewAppsModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ReviewAppsModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ReviewAppsModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="SplitString" FunctionName="ReviewAppsModel.Store.SplitString">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ReviewAppsModel.SplitString_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ResetWholeSystemX" FunctionName="ReviewAppsModel.Store.ResetWholeSystem" />
+          <EntitySetMapping Name="Advertises">
+            <EntityTypeMapping TypeName="ReviewAppsModel.Advertise">
+              <MappingFragment StoreEntitySet="Advertise">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="IsLifeTime" ColumnName="IsLifeTime" />
+                <ScalarProperty Name="EndAt" ColumnName="EndAt" />
+                <ScalarProperty Name="PublishAt" ColumnName="PublishAt" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Subtitle" ColumnName="Subtitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AdvertiseID" ColumnName="AdvertiseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Apps">
             <EntityTypeMapping TypeName="ReviewAppsModel.App">
               <MappingFragment StoreEntitySet="App">
+                <ScalarProperty Name="PriceInUSD" ColumnName="PriceInUSD" />
+                <ScalarProperty Name="SHA256" ColumnName="SHA256" />
+                <ScalarProperty Name="IsPublishAtScheduledTime" ColumnName="IsPublishAtScheduledTime" />
+                <ScalarProperty Name="PublishAt" ColumnName="PublishAt" />
+                <ScalarProperty Name="IsDetailPresent" ColumnName="IsDetailPresent" />
                 <ScalarProperty Name="UrlWithoutEscapseSequence" ColumnName="UrlWithoutEscapseSequence" />
                 <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -1384,6 +2671,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AppDetails">
+            <EntityTypeMapping TypeName="ReviewAppsModel.AppDetail">
+              <MappingFragment StoreEntitySet="AppDetail">
+                <ScalarProperty Name="DescriptionInHTML3" ColumnName="DescriptionInHTML3" />
+                <ScalarProperty Name="DescriptionInHTML2" ColumnName="DescriptionInHTML2" />
+                <ScalarProperty Name="DescriptionInHTML1" ColumnName="DescriptionInHTML1" />
+                <ScalarProperty Name="AppDetailID" ColumnName="AppDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AppDrafts">
             <EntityTypeMapping TypeName="ReviewAppsModel.AppDraft">
               <MappingFragment StoreEntitySet="AppDraft">
@@ -1408,6 +2705,76 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Blogs">
+            <EntityTypeMapping TypeName="ReviewAppsModel.Blog">
+              <MappingFragment StoreEntitySet="Blog">
+                <ScalarProperty Name="SHA256" ColumnName="SHA256" />
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="CssStyleID" ColumnName="CssStyleID" />
+                <ScalarProperty Name="TakeOffAfter" ColumnName="TakeOffAfter" />
+                <ScalarProperty Name="IsGalleryPresent" ColumnName="IsGalleryPresent" />
+                <ScalarProperty Name="DislikedCount" ColumnName="DislikedCount" />
+                <ScalarProperty Name="LikedCount" ColumnName="LikedCount" />
+                <ScalarProperty Name="ViewsCount" ColumnName="ViewsCount" />
+                <ScalarProperty Name="ReportedCount" ColumnName="ReportedCount" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="DraftAt" ColumnName="DraftAt" />
+                <ScalarProperty Name="PublishedAt" ColumnName="PublishedAt" />
+                <ScalarProperty Name="IsDraft" ColumnName="IsDraft" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BlogCategoryID" ColumnName="BlogCategoryID" />
+                <ScalarProperty Name="ContainsFiles" ColumnName="ContainsFiles" />
+                <ScalarProperty Name="Article" ColumnName="Article" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogAppRelations">
+            <EntityTypeMapping TypeName="ReviewAppsModel.BlogAppRelation">
+              <MappingFragment StoreEntitySet="BlogAppRelation">
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+                <ScalarProperty Name="BlogAppRelationID" ColumnName="BlogAppRelationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogCategories">
+            <EntityTypeMapping TypeName="ReviewAppsModel.BlogCategory">
+              <MappingFragment StoreEntitySet="BlogCategory">
+                <ScalarProperty Name="IsFileType" ColumnName="IsFileType" />
+                <ScalarProperty Name="IsCore" ColumnName="IsCore" />
+                <ScalarProperty Name="Slug" ColumnName="Slug" />
+                <ScalarProperty Name="BlogCategoryName" ColumnName="BlogCategoryName" />
+                <ScalarProperty Name="BlogCategoryID" ColumnName="BlogCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogDetails">
+            <EntityTypeMapping TypeName="ReviewAppsModel.BlogDetail">
+              <MappingFragment StoreEntitySet="BlogDetail">
+                <ScalarProperty Name="Detail5" ColumnName="Detail5" />
+                <ScalarProperty Name="Detail4" ColumnName="Detail4" />
+                <ScalarProperty Name="Detail3" ColumnName="Detail3" />
+                <ScalarProperty Name="Detail2" ColumnName="Detail2" />
+                <ScalarProperty Name="Detail1" ColumnName="Detail1" />
+                <ScalarProperty Name="BlogDetailID" ColumnName="BlogDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogFiles">
+            <EntityTypeMapping TypeName="ReviewAppsModel.BlogFile">
+              <MappingFragment StoreEntitySet="BlogFile">
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="IsLink" ColumnName="IsLink" />
+                <ScalarProperty Name="GalleryID" ColumnName="GalleryID" />
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+                <ScalarProperty Name="BlogFilesID" ColumnName="BlogFilesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="ReviewAppsModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -1427,6 +2794,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CssStyles">
+            <EntityTypeMapping TypeName="ReviewAppsModel.CssStyle">
+              <MappingFragment StoreEntitySet="CssStyle">
+                <ScalarProperty Name="IsCompiled" ColumnName="IsCompiled" />
+                <ScalarProperty Name="ParentStyleID" ColumnName="ParentStyleID" />
+                <ScalarProperty Name="Style4" ColumnName="Style4" />
+                <ScalarProperty Name="Style3" ColumnName="Style3" />
+                <ScalarProperty Name="Style2" ColumnName="Style2" />
+                <ScalarProperty Name="Style1" ColumnName="Style1" />
+                <ScalarProperty Name="CssName" ColumnName="CssName" />
+                <ScalarProperty Name="CssStyleID" ColumnName="CssStyleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FeaturedImages">
             <EntityTypeMapping TypeName="ReviewAppsModel.FeaturedImage">
               <MappingFragment StoreEntitySet="FeaturedImage">
@@ -1434,6 +2815,14 @@
                 <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
                 <ScalarProperty Name="AppID" ColumnName="AppID" />
                 <ScalarProperty Name="FeaturedImageID" ColumnName="FeaturedImageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileTypes">
+            <EntityTypeMapping TypeName="ReviewAppsModel.FileType">
+              <MappingFragment StoreEntitySet="FileType">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="FileTypeID" ColumnName="FileTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1461,14 +2850,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LatestSeenNotifications">
-            <EntityTypeMapping TypeName="ReviewAppsModel.LatestSeenNotification">
-              <MappingFragment StoreEntitySet="LatestSeenNotification">
-                <ScalarProperty Name="Dated" ColumnName="Dated" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="LatestSeenNotificationID" ColumnName="LatestSeenNotificationID" />
+          <EntitySetMapping Name="GenericSettings">
+            <EntityTypeMapping TypeName="ReviewAppsModel.GenericSetting">
+              <MappingFragment StoreEntitySet="GenericSetting">
+                <ScalarProperty Name="SettingName" ColumnName="SettingName" />
+                <ScalarProperty Name="GenericSettingID" ColumnName="GenericSettingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GenericSettingItems">
+            <EntityTypeMapping TypeName="ReviewAppsModel.GenericSettingItem">
+              <MappingFragment StoreEntitySet="GenericSettingItem">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="GenericSettingID" ColumnName="GenericSettingID" />
+                <ScalarProperty Name="GenericSettingItemID" ColumnName="GenericSettingItemID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1494,6 +2890,7 @@
           <EntitySetMapping Name="MessageSeens">
             <EntityTypeMapping TypeName="ReviewAppsModel.MessageSeen">
               <MappingFragment StoreEntitySet="MessageSeen">
+                <ScalarProperty Name="MessageIcon" ColumnName="MessageIcon" />
                 <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
                 <ScalarProperty Name="SentDate" ColumnName="SentDate" />
                 <ScalarProperty Name="LastModified" ColumnName="LastModified" />
@@ -1512,6 +2909,9 @@
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="ReviewAppsModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="IsSeen" ColumnName="IsSeen" />
+                <ScalarProperty Name="IsGeneratedFromSystem" ColumnName="IsGeneratedFromSystem" />
+                <ScalarProperty Name="FromUserID" ColumnName="FromUserID" />
                 <ScalarProperty Name="Dated" ColumnName="Dated" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
@@ -1520,13 +2920,59 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NotificationLatests">
+            <EntityTypeMapping TypeName="ReviewAppsModel.NotificationLatest">
+              <MappingFragment StoreEntitySet="NotificationLatest">
+                <ScalarProperty Name="IsSeen" ColumnName="IsSeen" />
+                <ScalarProperty Name="IsGeneratedFromSystem" ColumnName="IsGeneratedFromSystem" />
+                <ScalarProperty Name="FromUserID" ColumnName="FromUserID" />
+                <ScalarProperty Name="Dated" ColumnName="Dated" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LatestSeenNotificationID" ColumnName="LatestSeenNotificationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NotificationTypes">
             <EntityTypeMapping TypeName="ReviewAppsModel.NotificationType">
               <MappingFragment StoreEntitySet="NotificationType">
+                <ScalarProperty Name="LabelColor" ColumnName="LabelColor" />
                 <ScalarProperty Name="DefaultMessage" ColumnName="DefaultMessage" />
                 <ScalarProperty Name="IsGood" ColumnName="IsGood" />
                 <ScalarProperty Name="TypeName" ColumnName="TypeName" />
                 <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="ReviewAppsModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
+                <ScalarProperty Name="ByUserID" ColumnName="ByUserID" />
+                <ScalarProperty Name="Dated" ColumnName="Dated" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PurposeText" ColumnName="PurposeText" />
+                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentMethods">
+            <EntityTypeMapping TypeName="ReviewAppsModel.PaymentMethod">
+              <MappingFragment StoreEntitySet="PaymentMethod">
+                <ScalarProperty Name="AuthID" ColumnName="AuthID" />
+                <ScalarProperty Name="AuthPass" ColumnName="AuthPass" />
+                <ScalarProperty Name="MethodName" ColumnName="MethodName" />
+                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentTypes">
+            <EntityTypeMapping TypeName="ReviewAppsModel.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentType">
+                <ScalarProperty Name="PaymentType1" ColumnName="PaymentType" />
+                <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1571,6 +3017,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Subscribes">
+            <EntityTypeMapping TypeName="ReviewAppsModel.Subscribe">
+              <MappingFragment StoreEntitySet="Subscribe">
+                <ScalarProperty Name="LastSendAt" ColumnName="LastSendAt" />
+                <ScalarProperty Name="MailsSend" ColumnName="MailsSend" />
+                <ScalarProperty Name="IsSubscribedByNonUser" ColumnName="IsSubscribedByNonUser" />
+                <ScalarProperty Name="IsSubscribedByUser" ColumnName="IsSubscribedByUser" />
+                <ScalarProperty Name="SubscribedByEmail" ColumnName="SubscribedByEmail" />
+                <ScalarProperty Name="SubscribedToUserID" ColumnName="SubscribedToUserID" />
+                <ScalarProperty Name="SubscribedByUserID" ColumnName="SubscribedByUserID" />
+                <ScalarProperty Name="SubscribeID" ColumnName="SubscribeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ReviewAppsModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tags">
             <EntityTypeMapping TypeName="ReviewAppsModel.Tag">
               <MappingFragment StoreEntitySet="Tag">
@@ -1588,6 +3059,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TagBlogRelations">
+            <EntityTypeMapping TypeName="ReviewAppsModel.TagBlogRelation">
+              <MappingFragment StoreEntitySet="TagBlogRelation">
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="TagBlogRelationID" ColumnName="TagBlogRelationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TempUploads">
             <EntityTypeMapping TypeName="ReviewAppsModel.TempUpload">
               <MappingFragment StoreEntitySet="TempUpload">
@@ -1596,6 +3076,19 @@
                 <ScalarProperty Name="AppID" ColumnName="AppID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="TempUploadID" ColumnName="TempUploadID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UploadFileDrafts">
+            <EntityTypeMapping TypeName="ReviewAppsModel.UploadFileDraft">
+              <MappingFragment StoreEntitySet="UploadFileDraft">
+                <ScalarProperty Name="FileSizeMB" ColumnName="FileSizeMB" />
+                <ScalarProperty Name="FileTypeID" ColumnName="FileTypeID" />
+                <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+                <ScalarProperty Name="GalleryCategoryID" ColumnName="GalleryCategoryID" />
+                <ScalarProperty Name="UseID" ColumnName="UseID" />
+                <ScalarProperty Name="Dated" ColumnName="Dated" />
+                <ScalarProperty Name="UploadFileDraftID" ColumnName="UploadFileDraftID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1608,6 +3101,18 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLatestUpdates">
+            <EntityTypeMapping TypeName="ReviewAppsModel.UserLatestUpdate">
+              <MappingFragment StoreEntitySet="UserLatestUpdates">
+                <ScalarProperty Name="ByUserID" ColumnName="ByUserID" />
+                <ScalarProperty Name="AddedAt" ColumnName="AddedAt" />
+                <ScalarProperty Name="IsSendToSubscriber" ColumnName="IsSendToSubscriber" />
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+                <ScalarProperty Name="UserLatestUpdatesID" ColumnName="UserLatestUpdatesID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1631,6 +3136,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetSha2561" FunctionName="ReviewAppsModel.Store.GetSha2561" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
