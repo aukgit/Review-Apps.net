@@ -77,9 +77,10 @@
             <PropertyRef Name="AppDetailID" />
           </Key>
           <Property Name="AppDetailID" Type="bigint" Nullable="false" />
-          <Property Name="DescriptionInHTML1" Type="nvarchar" MaxLength="800" Nullable="false" />
-          <Property Name="DescriptionInHTML2" Type="nvarchar(max)" />
-          <Property Name="DescriptionInHTML3" Type="nvarchar(max)" />
+          <Property Name="DescriptionInHTML1" Type="nvarchar" MaxLength="350" Nullable="false" />
+          <Property Name="DescriptionInHTML2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DescriptionInHTML3" Type="nvarchar" MaxLength="2000" />
+          <Property Name="DescriptionInHTML4" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="AppDraft">
           <Key>
@@ -194,6 +195,40 @@
           <Property Name="UserID" Type="bigint" Nullable="false" />
           <Property Name="PlatformID" Type="tinyint" Nullable="false" />
           <Property Name="PlatformVersion" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'RelatedID' in the table 'D:\WORKING (SSD)\GITHUB\REVIEW-APPS.NET\REVIEWAPPS\APP_DATA\REVIEWAPPS.MDF.dbo.Chat' was excluded.-->
+        <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="ChatID" />
+          </Key>
+          <Property Name="ChatID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID1" Type="bigint" Nullable="false" />
+          <Property Name="UserID2" Type="bigint" Nullable="false" />
+          <Property Name="StartedTime" Type="date" Nullable="false" />
+          <Property Name="IsSupport" Type="bit" Nullable="false" />
+          <Property Name="IsResolved" Type="bit" Nullable="false" />
+          <Property Name="ChatTypeID" Type="tinyint" Nullable="false" />
+          <Property Name="RelatedIDTypeID" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChatConversation">
+          <Key>
+            <PropertyRef Name="ChatConversationID" />
+          </Key>
+          <Property Name="ChatConversationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChatID" Type="bigint" Nullable="false" />
+          <Property Name="IsUser1Sending" Type="bit" Nullable="false" />
+          <Property Name="Time" Type="smalldatetime" Nullable="false" />
+          <Property Name="Message1" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Message2" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsDelivered" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChatType">
+          <Key>
+            <PropertyRef Name="ChatTypeID" />
+          </Key>
+          <Property Name="ChatTypeID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChatTypeName" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="CssStyle">
           <Key>
@@ -314,7 +349,7 @@
           <Property Name="IsFlaged" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'RelatedRecordID' in the table 'D:\WORKING (SSD)\GITHUB\REVIEW-APPS.NET\REVIEWAPPS\APP_DATA\REVIEWAPPS.MDF.dbo.Notification' was excluded.
+warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'RelatedID' in the table 'D:\WORKING (SSD)\GITHUB\REVIEW-APPS.NET\REVIEWAPPS\APP_DATA\REVIEWAPPS.MDF.dbo.Notification' was excluded.
 warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'RedirectUrl' in the table 'D:\WORKING (SSD)\GITHUB\REVIEW-APPS.NET\REVIEWAPPS\APP_DATA\REVIEWAPPS.MDF.dbo.Notification' was excluded.-->
         <EntityType Name="Notification">
           <Key>
@@ -328,6 +363,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="FromUserID" Type="bigint" />
           <Property Name="IsGeneratedFromSystem" Type="bit" Nullable="false" />
           <Property Name="IsSeen" Type="bit" Nullable="false" />
+          <Property Name="RelatedIDTypeID" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="NotificationLatest">
           <Key>
@@ -391,10 +427,16 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
         <EntityType Name="RelatedApp">
           <Key>
             <PropertyRef Name="RelatedAppID" />
-            <PropertyRef Name="AppID" />
           </Key>
-          <Property Name="RelatedAppID" Type="bigint" Nullable="false" />
+          <Property Name="RelatedAppID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RelatedIDType">
+          <Key>
+            <PropertyRef Name="RelatedIDTypeID" />
+          </Key>
+          <Property Name="RelatedIDTypeID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RelatedIDTypeName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -427,6 +469,31 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="IsDisliked" Type="bit" Nullable="false" />
           <Property Name="IsNone" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="SearchedAppsFound">
+          <Key>
+            <PropertyRef Name="SearchedAppsFoundID" />
+          </Key>
+          <Property Name="SearchedAppsFoundID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SearchIndexID" Type="bigint" Nullable="false" />
+          <Property Name="AppID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SearchedBlogArticleFound">
+          <Key>
+            <PropertyRef Name="SearchedBlogArticleFoundID" />
+          </Key>
+          <Property Name="SearchedBlogArticleFoundID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SearchIndexID" Type="bigint" Nullable="false" />
+          <Property Name="BlogID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SearchIndex">
+          <Key>
+            <PropertyRef Name="SearchIndexID" />
+          </Key>
+          <Property Name="SearchIndexID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SearchText" Type="nvarchar" MaxLength="220" Nullable="false" />
+          <Property Name="SearchedAt" Type="date" Nullable="false" />
+          <Property Name="AvailableAppsCount" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Subscribe">
           <Key>
             <PropertyRef Name="SubscribeID" />
@@ -439,16 +506,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="IsSubscribedByNonUser" Type="bit" Nullable="false" />
           <Property Name="MailsSend" Type="bigint" Nullable="false" />
           <Property Name="LastSendAt" Type="smalldatetime" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -507,6 +564,8 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="TotalEarnedPoints" Type="bigint" Nullable="false" />
           <Property Name="IsProfileSet" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'OtherRelatedID' in the table 'D:\WORKING (SSD)\GITHUB\REVIEW-APPS.NET\REVIEWAPPS\APP_DATA\REVIEWAPPS.MDF.dbo.UserLatestUpdates' was excluded.-->
         <EntityType Name="UserLatestUpdates">
           <Key>
             <PropertyRef Name="UserLatestUpdatesID" />
@@ -517,6 +576,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="IsSendToSubscriber" Type="bit" Nullable="false" />
           <Property Name="AddedAt" Type="smalldatetime" />
           <Property Name="ByUserID" Type="bigint" Nullable="false" />
+          <Property Name="RelatedIDTypeID" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="UserPoint">
           <Key>
@@ -535,6 +595,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="UserPointSettingID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Point" Type="int" Nullable="false" />
+          <Property Name="IsChatEnabled" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_AdvComment_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -752,6 +813,54 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Chat_ChatType">
+          <End Role="ChatType" Type="Self.ChatType" Multiplicity="1" />
+          <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChatType">
+              <PropertyRef Name="ChatTypeID" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="ChatTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chat_RelatedIDType">
+          <End Role="RelatedIDType" Type="Self.RelatedIDType" Multiplicity="1" />
+          <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelatedIDType">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chat_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="UserID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChatConversation_Chat">
+          <End Role="Chat" Type="Self.Chat" Multiplicity="1" />
+          <End Role="ChatConversation" Type="Self.ChatConversation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chat">
+              <PropertyRef Name="ChatID" />
+            </Principal>
+            <Dependent Role="ChatConversation">
+              <PropertyRef Name="ChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CssStyle_CssStyle">
           <End Role="CssStyle" Type="Self.CssStyle" Multiplicity="0..1" />
           <End Role="CssStyle1" Type="Self.CssStyle" Multiplicity="*" />
@@ -896,6 +1005,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Notification_RelatedIDType">
+          <End Role="RelatedIDType" Type="Self.RelatedIDType" Multiplicity="1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelatedIDType">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Payment_PaymentMethod">
           <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
           <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
@@ -920,7 +1041,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RelatedApp_App">
+        <Association Name="FK_RelatedApp_App2">
           <End Role="App" Type="Self.App" Multiplicity="1" />
           <End Role="RelatedApp" Type="Self.RelatedApp" Multiplicity="*" />
           <ReferentialConstraint>
@@ -929,18 +1050,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="RelatedApp">
               <PropertyRef Name="AppID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RelatedApp_App1">
-          <End Role="App" Type="Self.App" Multiplicity="1" />
-          <End Role="RelatedApp" Type="Self.RelatedApp" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="App">
-              <PropertyRef Name="AppID" />
-            </Principal>
-            <Dependent Role="RelatedApp">
-              <PropertyRef Name="RelatedAppID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1001,6 +1110,54 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="ReviewLikeDislike">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SearchedAppsFound_App">
+          <End Role="App" Type="Self.App" Multiplicity="1" />
+          <End Role="SearchedAppsFound" Type="Self.SearchedAppsFound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="App">
+              <PropertyRef Name="AppID" />
+            </Principal>
+            <Dependent Role="SearchedAppsFound">
+              <PropertyRef Name="AppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SearchedAppsFound_SearchIndex">
+          <End Role="SearchIndex" Type="Self.SearchIndex" Multiplicity="1" />
+          <End Role="SearchedAppsFound" Type="Self.SearchedAppsFound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SearchIndex">
+              <PropertyRef Name="SearchIndexID" />
+            </Principal>
+            <Dependent Role="SearchedAppsFound">
+              <PropertyRef Name="SearchIndexID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SearchedBlogArticleFound_Blog">
+          <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+          <End Role="SearchedBlogArticleFound" Type="Self.SearchedBlogArticleFound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="SearchedBlogArticleFound">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SearchedBlogArticleFound_SearchIndex">
+          <End Role="SearchIndex" Type="Self.SearchIndex" Multiplicity="1" />
+          <End Role="SearchedBlogArticleFound" Type="Self.SearchedBlogArticleFound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SearchIndex">
+              <PropertyRef Name="SearchIndexID" />
+            </Principal>
+            <Dependent Role="SearchedBlogArticleFound">
+              <PropertyRef Name="SearchIndexID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1085,6 +1242,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="UserLatestUpdates">
               <PropertyRef Name="AppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLatestUpdates_RelatedIDType">
+          <End Role="RelatedIDType" Type="Self.RelatedIDType" Multiplicity="1" />
+          <End Role="UserLatestUpdates" Type="Self.UserLatestUpdates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelatedIDType">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Principal>
+            <Dependent Role="UserLatestUpdates">
+              <PropertyRef Name="RelatedIDTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1209,6 +1378,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="BlogFile" EntityType="Self.BlogFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CellPhone" EntityType="Self.CellPhone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chat" EntityType="Self.Chat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatConversation" EntityType="Self.ChatConversation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatType" EntityType="Self.ChatType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CssStyle" EntityType="Self.CssStyle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FeaturedImage" EntityType="Self.FeaturedImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FileType" EntityType="Self.FileType" Schema="dbo" store:Type="Tables" />
@@ -1227,10 +1399,13 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Platform" EntityType="Self.Platform" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RelatedApp" EntityType="Self.RelatedApp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RelatedIDType" EntityType="Self.RelatedIDType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReviewLikeDislike" EntityType="Self.ReviewLikeDislike" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SearchedAppsFound" EntityType="Self.SearchedAppsFound" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SearchedBlogArticleFound" EntityType="Self.SearchedBlogArticleFound" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SearchIndex" EntityType="Self.SearchIndex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subscribe" EntityType="Self.Subscribe" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TagAppRelation" EntityType="Self.TagAppRelation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TagBlogRelation" EntityType="Self.TagBlogRelation" Schema="dbo" store:Type="Tables" />
@@ -1312,6 +1487,22 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="User" EntitySet="User" />
             <End Role="CellPhone" EntitySet="CellPhone" />
           </AssociationSet>
+          <AssociationSet Name="FK_Chat_ChatType" Association="Self.FK_Chat_ChatType">
+            <End Role="ChatType" EntitySet="ChatType" />
+            <End Role="Chat" EntitySet="Chat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chat_RelatedIDType" Association="Self.FK_Chat_RelatedIDType">
+            <End Role="RelatedIDType" EntitySet="RelatedIDType" />
+            <End Role="Chat" EntitySet="Chat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chat_User" Association="Self.FK_Chat_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Chat" EntitySet="Chat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChatConversation_Chat" Association="Self.FK_ChatConversation_Chat">
+            <End Role="Chat" EntitySet="Chat" />
+            <End Role="ChatConversation" EntitySet="ChatConversation" />
+          </AssociationSet>
           <AssociationSet Name="FK_CssStyle_CssStyle" Association="Self.FK_CssStyle_CssStyle">
             <End Role="CssStyle" EntitySet="CssStyle" />
             <End Role="CssStyle1" EntitySet="CssStyle" />
@@ -1360,6 +1551,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="NotificationType" EntitySet="NotificationType" />
             <End Role="Notification" EntitySet="Notification" />
           </AssociationSet>
+          <AssociationSet Name="FK_Notification_RelatedIDType" Association="Self.FK_Notification_RelatedIDType">
+            <End Role="RelatedIDType" EntitySet="RelatedIDType" />
+            <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
           <AssociationSet Name="FK_Payment_PaymentMethod" Association="Self.FK_Payment_PaymentMethod">
             <End Role="PaymentMethod" EntitySet="PaymentMethod" />
             <End Role="Payment" EntitySet="Payment" />
@@ -1368,11 +1563,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="PaymentType" EntitySet="PaymentType" />
             <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
-          <AssociationSet Name="FK_RelatedApp_App" Association="Self.FK_RelatedApp_App">
-            <End Role="App" EntitySet="App" />
-            <End Role="RelatedApp" EntitySet="RelatedApp" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RelatedApp_App1" Association="Self.FK_RelatedApp_App1">
+          <AssociationSet Name="FK_RelatedApp_App2" Association="Self.FK_RelatedApp_App2">
             <End Role="App" EntitySet="App" />
             <End Role="RelatedApp" EntitySet="RelatedApp" />
           </AssociationSet>
@@ -1395,6 +1586,22 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="FK_ReviewLikeDislike_User" Association="Self.FK_ReviewLikeDislike_User">
             <End Role="User" EntitySet="User" />
             <End Role="ReviewLikeDislike" EntitySet="ReviewLikeDislike" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SearchedAppsFound_App" Association="Self.FK_SearchedAppsFound_App">
+            <End Role="App" EntitySet="App" />
+            <End Role="SearchedAppsFound" EntitySet="SearchedAppsFound" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SearchedAppsFound_SearchIndex" Association="Self.FK_SearchedAppsFound_SearchIndex">
+            <End Role="SearchIndex" EntitySet="SearchIndex" />
+            <End Role="SearchedAppsFound" EntitySet="SearchedAppsFound" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SearchedBlogArticleFound_Blog" Association="Self.FK_SearchedBlogArticleFound_Blog">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="SearchedBlogArticleFound" EntitySet="SearchedBlogArticleFound" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SearchedBlogArticleFound_SearchIndex" Association="Self.FK_SearchedBlogArticleFound_SearchIndex">
+            <End Role="SearchIndex" EntitySet="SearchIndex" />
+            <End Role="SearchedBlogArticleFound" EntitySet="SearchedBlogArticleFound" />
           </AssociationSet>
           <AssociationSet Name="FK_TagAppRelation_App" Association="Self.FK_TagAppRelation_App">
             <End Role="App" EntitySet="App" />
@@ -1424,6 +1631,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="App" EntitySet="App" />
             <End Role="UserLatestUpdates" EntitySet="UserLatestUpdates" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserLatestUpdates_RelatedIDType" Association="Self.FK_UserLatestUpdates_RelatedIDType">
+            <End Role="RelatedIDType" EntitySet="RelatedIDType" />
+            <End Role="UserLatestUpdates" EntitySet="UserLatestUpdates" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserLatestUpdates_User" Association="Self.FK_UserLatestUpdates_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserLatestUpdates" EntitySet="UserLatestUpdates" />
@@ -1442,48 +1653,11 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
     <edmx:ConceptualModels>
       <Schema Namespace="ReviewAppsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ReviewAppsEntities" annotation:LazyLoadingEnabled="false">
-          <FunctionImport Name="AppsSearch" ReturnType="Collection(ReviewAppsModel.AppsSearch_Result)">
-          <Parameter Name="SearchText" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="ResetAppDrafts" />
           <FunctionImport Name="ResetApps" />
           <FunctionImport Name="ResetAppsAndUsers" />
           <FunctionImport Name="ResetReviews" />
           <FunctionImport Name="ResetWholeSystem" />
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ReviewAppsModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ReviewAppsModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="SplitString" IsComposable="true" ReturnType="Collection(ReviewAppsModel.SplitString_Result)">
-            <Parameter Name="stringToSplit" Mode="In" Type="String" />
-            <Parameter Name="splitChar" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="ResetWholeSystemX" />
           <FunctionImport Name="GetSha2561" IsComposable="true" ReturnType="Collection(Binary)">
           <Parameter Name="str" Mode="In" Type="String" />
@@ -1502,6 +1676,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="BlogFiles" EntityType="ReviewAppsModel.BlogFile" />
           <EntitySet Name="Categories" EntityType="ReviewAppsModel.Category" />
           <EntitySet Name="CellPhones" EntityType="ReviewAppsModel.CellPhone" />
+          <EntitySet Name="Chats" EntityType="ReviewAppsModel.Chat" />
+          <EntitySet Name="ChatConversations" EntityType="ReviewAppsModel.ChatConversation" />
+          <EntitySet Name="ChatTypes" EntityType="ReviewAppsModel.ChatType" />
           <EntitySet Name="CssStyles" EntityType="ReviewAppsModel.CssStyle" />
           <EntitySet Name="FeaturedImages" EntityType="ReviewAppsModel.FeaturedImage" />
           <EntitySet Name="FileTypes" EntityType="ReviewAppsModel.FileType" />
@@ -1519,10 +1696,14 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="PaymentMethods" EntityType="ReviewAppsModel.PaymentMethod" />
           <EntitySet Name="PaymentTypes" EntityType="ReviewAppsModel.PaymentType" />
           <EntitySet Name="Platforms" EntityType="ReviewAppsModel.Platform" />
+          <EntitySet Name="RelatedApps" EntityType="ReviewAppsModel.RelatedApp" />
+          <EntitySet Name="RelatedIDTypes" EntityType="ReviewAppsModel.RelatedIDType" />
           <EntitySet Name="Reviews" EntityType="ReviewAppsModel.Review" />
           <EntitySet Name="ReviewLikeDislikes" EntityType="ReviewAppsModel.ReviewLikeDislike" />
+          <EntitySet Name="SearchedAppsFounds" EntityType="ReviewAppsModel.SearchedAppsFound" />
+          <EntitySet Name="SearchedBlogArticleFounds" EntityType="ReviewAppsModel.SearchedBlogArticleFound" />
+          <EntitySet Name="SearchIndexes" EntityType="ReviewAppsModel.SearchIndex" />
           <EntitySet Name="Subscribes" EntityType="ReviewAppsModel.Subscribe" />
-          <EntitySet Name="sysdiagrams" EntityType="ReviewAppsModel.sysdiagram" />
           <EntitySet Name="Tags" EntityType="ReviewAppsModel.Tag" />
           <EntitySet Name="TagAppRelations" EntityType="ReviewAppsModel.TagAppRelation" />
           <EntitySet Name="TagBlogRelations" EntityType="ReviewAppsModel.TagBlogRelation" />
@@ -1572,9 +1753,17 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="App" EntitySet="Apps" />
             <End Role="FeaturedImage" EntitySet="FeaturedImages" />
           </AssociationSet>
+          <AssociationSet Name="FK_RelatedApp_App2" Association="ReviewAppsModel.FK_RelatedApp_App2">
+            <End Role="App" EntitySet="Apps" />
+            <End Role="RelatedApp" EntitySet="RelatedApps" />
+          </AssociationSet>
           <AssociationSet Name="FK_Review_App" Association="ReviewAppsModel.FK_Review_App">
             <End Role="App" EntitySet="Apps" />
             <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SearchedAppsFound_App" Association="ReviewAppsModel.FK_SearchedAppsFound_App">
+            <End Role="App" EntitySet="Apps" />
+            <End Role="SearchedAppsFound" EntitySet="SearchedAppsFounds" />
           </AssociationSet>
           <AssociationSet Name="FK_TagAppRelation_App" Association="ReviewAppsModel.FK_TagAppRelation_App">
             <End Role="App" EntitySet="Apps" />
@@ -1612,6 +1801,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="Blog" EntitySet="Blogs" />
             <End Role="BlogFile" EntitySet="BlogFiles" />
           </AssociationSet>
+          <AssociationSet Name="FK_SearchedBlogArticleFound_Blog" Association="ReviewAppsModel.FK_SearchedBlogArticleFound_Blog">
+            <End Role="Blog" EntitySet="Blogs" />
+            <End Role="SearchedBlogArticleFound" EntitySet="SearchedBlogArticleFounds" />
+          </AssociationSet>
           <AssociationSet Name="FK_TagBlogRelation_Blog" Association="ReviewAppsModel.FK_TagBlogRelation_Blog">
             <End Role="Blog" EntitySet="Blogs" />
             <End Role="TagBlogRelation" EntitySet="TagBlogRelations" />
@@ -1623,6 +1816,22 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="FK_CellPhone_User" Association="ReviewAppsModel.FK_CellPhone_User">
             <End Role="User" EntitySet="Users" />
             <End Role="CellPhone" EntitySet="CellPhones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chat_ChatType" Association="ReviewAppsModel.FK_Chat_ChatType">
+            <End Role="ChatType" EntitySet="ChatTypes" />
+            <End Role="Chat" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chat_RelatedIDType" Association="ReviewAppsModel.FK_Chat_RelatedIDType">
+            <End Role="RelatedIDType" EntitySet="RelatedIDTypes" />
+            <End Role="Chat" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chat_User" Association="ReviewAppsModel.FK_Chat_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Chat" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChatConversation_Chat" Association="ReviewAppsModel.FK_ChatConversation_Chat">
+            <End Role="Chat" EntitySet="Chats" />
+            <End Role="ChatConversation" EntitySet="ChatConversations" />
           </AssociationSet>
           <AssociationSet Name="FK_CssStyle_CssStyle" Association="ReviewAppsModel.FK_CssStyle_CssStyle">
             <End Role="CssStyle" EntitySet="CssStyles" />
@@ -1672,6 +1881,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="NotificationType" EntitySet="NotificationTypes" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
+          <AssociationSet Name="FK_Notification_RelatedIDType" Association="ReviewAppsModel.FK_Notification_RelatedIDType">
+            <End Role="RelatedIDType" EntitySet="RelatedIDTypes" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
           <AssociationSet Name="FK_LatestSeenNotification_User" Association="ReviewAppsModel.FK_LatestSeenNotification_User">
             <End Role="User" EntitySet="Users" />
             <End Role="NotificationLatest" EntitySet="NotificationLatests" />
@@ -1683,6 +1896,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="FK_Payment_PaymentType" Association="ReviewAppsModel.FK_Payment_PaymentType">
             <End Role="PaymentType" EntitySet="PaymentTypes" />
             <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLatestUpdates_RelatedIDType" Association="ReviewAppsModel.FK_UserLatestUpdates_RelatedIDType">
+            <End Role="RelatedIDType" EntitySet="RelatedIDTypes" />
+            <End Role="UserLatestUpdate" EntitySet="UserLatestUpdates" />
           </AssociationSet>
           <AssociationSet Name="FK_Review_Review" Association="ReviewAppsModel.FK_Review_Review">
             <End Role="Review" EntitySet="Reviews" />
@@ -1699,6 +1916,14 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="FK_ReviewLikeDislike_User" Association="ReviewAppsModel.FK_ReviewLikeDislike_User">
             <End Role="User" EntitySet="Users" />
             <End Role="ReviewLikeDislike" EntitySet="ReviewLikeDislikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SearchedAppsFound_SearchIndex" Association="ReviewAppsModel.FK_SearchedAppsFound_SearchIndex">
+            <End Role="SearchIndex" EntitySet="SearchIndexes" />
+            <End Role="SearchedAppsFound" EntitySet="SearchedAppsFounds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SearchedBlogArticleFound_SearchIndex" Association="ReviewAppsModel.FK_SearchedBlogArticleFound_SearchIndex">
+            <End Role="SearchIndex" EntitySet="SearchIndexes" />
+            <End Role="SearchedBlogArticleFound" EntitySet="SearchedBlogArticleFounds" />
           </AssociationSet>
           <AssociationSet Name="FK_TagAppRelation_Tag" Association="ReviewAppsModel.FK_TagAppRelation_Tag">
             <End Role="Tag" EntitySet="Tags" />
@@ -1719,10 +1944,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="FK_UserPoint_UserPointSetting" Association="ReviewAppsModel.FK_UserPoint_UserPointSetting">
             <End Role="UserPointSetting" EntitySet="UserPointSettings" />
             <End Role="UserPoint" EntitySet="UserPoints" />
-          </AssociationSet>
-          <AssociationSet Name="RelatedApp" Association="ReviewAppsModel.RelatedApp">
-            <End Role="App" EntitySet="Apps" />
-            <End Role="App1" EntitySet="Apps" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AppsSearch_Result">
@@ -1821,20 +2042,21 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="AppDetail" Relationship="ReviewAppsModel.FK_AppDetail_App" FromRole="App" ToRole="AppDetail" />
           <NavigationProperty Name="BlogAppRelations" Relationship="ReviewAppsModel.FK_BlogAppRelation_App" FromRole="App" ToRole="BlogAppRelation" />
           <NavigationProperty Name="FeaturedImages" Relationship="ReviewAppsModel.FK_FeaturedImage_App" FromRole="App" ToRole="FeaturedImage" />
+          <NavigationProperty Name="RelatedApps" Relationship="ReviewAppsModel.FK_RelatedApp_App2" FromRole="App" ToRole="RelatedApp" />
           <NavigationProperty Name="Reviews" Relationship="ReviewAppsModel.FK_Review_App" FromRole="App" ToRole="Review" />
+          <NavigationProperty Name="SearchedAppsFounds" Relationship="ReviewAppsModel.FK_SearchedAppsFound_App" FromRole="App" ToRole="SearchedAppsFound" />
           <NavigationProperty Name="TagAppRelations" Relationship="ReviewAppsModel.FK_TagAppRelation_App" FromRole="App" ToRole="TagAppRelation" />
           <NavigationProperty Name="UserLatestUpdates" Relationship="ReviewAppsModel.FK_UserLatestUpdates_App" FromRole="App" ToRole="UserLatestUpdate" />
-          <NavigationProperty Name="App1" Relationship="ReviewAppsModel.RelatedApp" FromRole="App" ToRole="App1" />
-          <NavigationProperty Name="Apps" Relationship="ReviewAppsModel.RelatedApp" FromRole="App1" ToRole="App" />
         </EntityType>
         <EntityType Name="AppDetail">
           <Key>
             <PropertyRef Name="AppDetailID" />
           </Key>
           <Property Name="AppDetailID" Type="Int64" Nullable="false" />
-          <Property Name="DescriptionInHTML1" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionInHTML2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionInHTML3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionInHTML1" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionInHTML2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionInHTML3" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionInHTML4" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="App" Relationship="ReviewAppsModel.FK_AppDetail_App" FromRole="AppDetail" ToRole="App" />
         </EntityType>
         <EntityType Name="AppDraft">
@@ -1903,6 +2125,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_Blog_User" FromRole="Blog" ToRole="User" />
           <NavigationProperty Name="BlogAppRelations" Relationship="ReviewAppsModel.FK_BlogAppRelation_Blog" FromRole="Blog" ToRole="BlogAppRelation" />
           <NavigationProperty Name="BlogFiles" Relationship="ReviewAppsModel.FK_BlogFile_Blog" FromRole="Blog" ToRole="BlogFile" />
+          <NavigationProperty Name="SearchedBlogArticleFounds" Relationship="ReviewAppsModel.FK_SearchedBlogArticleFound_Blog" FromRole="Blog" ToRole="SearchedBlogArticleFound" />
           <NavigationProperty Name="TagBlogRelations" Relationship="ReviewAppsModel.FK_TagBlogRelation_Blog" FromRole="Blog" ToRole="TagBlogRelation" />
         </EntityType>
         <EntityType Name="BlogAppRelation">
@@ -1968,6 +2191,44 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="PlatformVersion" Type="Double" Nullable="false" />
           <NavigationProperty Name="Platform" Relationship="ReviewAppsModel.FK_CellPhone_Platform" FromRole="CellPhone" ToRole="Platform" />
           <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_CellPhone_User" FromRole="CellPhone" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Chat">
+          <Key>
+            <PropertyRef Name="ChatID" />
+          </Key>
+          <Property Name="ChatID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID1" Type="Int64" Nullable="false" />
+          <Property Name="UserID2" Type="Int64" Nullable="false" />
+          <Property Name="StartedTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsSupport" Type="Boolean" Nullable="false" />
+          <Property Name="IsResolved" Type="Boolean" Nullable="false" />
+          <Property Name="ChatTypeID" Type="Byte" Nullable="false" />
+          <Property Name="RelatedIDTypeID" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ChatType" Relationship="ReviewAppsModel.FK_Chat_ChatType" FromRole="Chat" ToRole="ChatType" />
+          <NavigationProperty Name="RelatedIDType" Relationship="ReviewAppsModel.FK_Chat_RelatedIDType" FromRole="Chat" ToRole="RelatedIDType" />
+          <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_Chat_User" FromRole="Chat" ToRole="User" />
+          <NavigationProperty Name="ChatConversations" Relationship="ReviewAppsModel.FK_ChatConversation_Chat" FromRole="Chat" ToRole="ChatConversation" />
+        </EntityType>
+        <EntityType Name="ChatConversation">
+          <Key>
+            <PropertyRef Name="ChatConversationID" />
+          </Key>
+          <Property Name="ChatConversationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChatID" Type="Int64" Nullable="false" />
+          <Property Name="IsUser1Sending" Type="Boolean" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Message1" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Message2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelivered" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Chat" Relationship="ReviewAppsModel.FK_ChatConversation_Chat" FromRole="ChatConversation" ToRole="Chat" />
+        </EntityType>
+        <EntityType Name="ChatType">
+          <Key>
+            <PropertyRef Name="ChatTypeID" />
+          </Key>
+          <Property Name="ChatTypeID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChatTypeName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Chats" Relationship="ReviewAppsModel.FK_Chat_ChatType" FromRole="ChatType" ToRole="Chat" />
         </EntityType>
         <EntityType Name="CssStyle">
           <Key>
@@ -2116,7 +2377,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="FromUserID" Type="Int64" />
           <Property Name="IsGeneratedFromSystem" Type="Boolean" Nullable="false" />
           <Property Name="IsSeen" Type="Boolean" Nullable="false" />
+          <Property Name="RelatedIDTypeID" Type="Byte" Nullable="false" />
           <NavigationProperty Name="NotificationType" Relationship="ReviewAppsModel.FK_Notification_NotificationType" FromRole="Notification" ToRole="NotificationType" />
+          <NavigationProperty Name="RelatedIDType" Relationship="ReviewAppsModel.FK_Notification_RelatedIDType" FromRole="Notification" ToRole="RelatedIDType" />
         </EntityType>
         <EntityType Name="NotificationLatest">
           <Key>
@@ -2186,6 +2449,24 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="Apps" Relationship="ReviewAppsModel.FK_App_Platform" FromRole="Platform" ToRole="App" />
           <NavigationProperty Name="CellPhones" Relationship="ReviewAppsModel.FK_CellPhone_Platform" FromRole="Platform" ToRole="CellPhone" />
         </EntityType>
+        <EntityType Name="RelatedApp">
+          <Key>
+            <PropertyRef Name="RelatedAppID" />
+          </Key>
+          <Property Name="RelatedAppID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="App" Relationship="ReviewAppsModel.FK_RelatedApp_App2" FromRole="RelatedApp" ToRole="App" />
+        </EntityType>
+        <EntityType Name="RelatedIDType">
+          <Key>
+            <PropertyRef Name="RelatedIDTypeID" />
+          </Key>
+          <Property Name="RelatedIDTypeID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RelatedIDTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Chats" Relationship="ReviewAppsModel.FK_Chat_RelatedIDType" FromRole="RelatedIDType" ToRole="Chat" />
+          <NavigationProperty Name="Notifications" Relationship="ReviewAppsModel.FK_Notification_RelatedIDType" FromRole="RelatedIDType" ToRole="Notification" />
+          <NavigationProperty Name="UserLatestUpdates" Relationship="ReviewAppsModel.FK_UserLatestUpdates_RelatedIDType" FromRole="RelatedIDType" ToRole="UserLatestUpdate" />
+        </EntityType>
         <EntityType Name="Review">
           <Key>
             <PropertyRef Name="ReviewID" />
@@ -2224,6 +2505,37 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="Review" Relationship="ReviewAppsModel.FK_ReviewLikeDislike_Review" FromRole="ReviewLikeDislike" ToRole="Review" />
           <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_ReviewLikeDislike_User" FromRole="ReviewLikeDislike" ToRole="User" />
         </EntityType>
+        <EntityType Name="SearchedAppsFound">
+          <Key>
+            <PropertyRef Name="SearchedAppsFoundID" />
+          </Key>
+          <Property Name="SearchedAppsFoundID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SearchIndexID" Type="Int64" Nullable="false" />
+          <Property Name="AppID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="App" Relationship="ReviewAppsModel.FK_SearchedAppsFound_App" FromRole="SearchedAppsFound" ToRole="App" />
+          <NavigationProperty Name="SearchIndex" Relationship="ReviewAppsModel.FK_SearchedAppsFound_SearchIndex" FromRole="SearchedAppsFound" ToRole="SearchIndex" />
+        </EntityType>
+        <EntityType Name="SearchedBlogArticleFound">
+          <Key>
+            <PropertyRef Name="SearchedBlogArticleFoundID" />
+          </Key>
+          <Property Name="SearchedBlogArticleFoundID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SearchIndexID" Type="Int64" Nullable="false" />
+          <Property Name="BlogID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Blog" Relationship="ReviewAppsModel.FK_SearchedBlogArticleFound_Blog" FromRole="SearchedBlogArticleFound" ToRole="Blog" />
+          <NavigationProperty Name="SearchIndex" Relationship="ReviewAppsModel.FK_SearchedBlogArticleFound_SearchIndex" FromRole="SearchedBlogArticleFound" ToRole="SearchIndex" />
+        </EntityType>
+        <EntityType Name="SearchIndex">
+          <Key>
+            <PropertyRef Name="SearchIndexID" />
+          </Key>
+          <Property Name="SearchIndexID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SearchText" Type="String" Nullable="false" MaxLength="220" FixedLength="false" Unicode="true" />
+          <Property Name="SearchedAt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AvailableAppsCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SearchedAppsFounds" Relationship="ReviewAppsModel.FK_SearchedAppsFound_SearchIndex" FromRole="SearchIndex" ToRole="SearchedAppsFound" />
+          <NavigationProperty Name="SearchedBlogArticleFounds" Relationship="ReviewAppsModel.FK_SearchedBlogArticleFound_SearchIndex" FromRole="SearchIndex" ToRole="SearchedBlogArticleFound" />
+        </EntityType>
         <EntityType Name="Subscribe">
           <Key>
             <PropertyRef Name="SubscribeID" />
@@ -2236,16 +2548,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="IsSubscribedByNonUser" Type="Boolean" Nullable="false" />
           <Property Name="MailsSend" Type="Int64" Nullable="false" />
           <Property Name="LastSendAt" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -2315,6 +2617,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="Apps" Relationship="ReviewAppsModel.FK_App_User" FromRole="User" ToRole="App" />
           <NavigationProperty Name="Blogs" Relationship="ReviewAppsModel.FK_Blog_User" FromRole="User" ToRole="Blog" />
           <NavigationProperty Name="CellPhones" Relationship="ReviewAppsModel.FK_CellPhone_User" FromRole="User" ToRole="CellPhone" />
+          <NavigationProperty Name="Chats" Relationship="ReviewAppsModel.FK_Chat_User" FromRole="User" ToRole="Chat" />
           <NavigationProperty Name="FeaturedImages" Relationship="ReviewAppsModel.FK_FeaturedImage_User" FromRole="User" ToRole="FeaturedImage" />
           <NavigationProperty Name="Messages" Relationship="ReviewAppsModel.FK_Message_User" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="Messages1" Relationship="ReviewAppsModel.FK_Message_User1" FromRole="User" ToRole="Message" />
@@ -2336,7 +2639,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="IsSendToSubscriber" Type="Boolean" Nullable="false" />
           <Property Name="AddedAt" Type="DateTime" Precision="0" />
           <Property Name="ByUserID" Type="Int64" Nullable="false" />
+          <Property Name="RelatedIDTypeID" Type="Byte" Nullable="false" />
           <NavigationProperty Name="App" Relationship="ReviewAppsModel.FK_UserLatestUpdates_App" FromRole="UserLatestUpdate" ToRole="App" />
+          <NavigationProperty Name="RelatedIDType" Relationship="ReviewAppsModel.FK_UserLatestUpdates_RelatedIDType" FromRole="UserLatestUpdate" ToRole="RelatedIDType" />
           <NavigationProperty Name="User" Relationship="ReviewAppsModel.FK_UserLatestUpdates_User" FromRole="UserLatestUpdate" ToRole="User" />
         </EntityType>
         <EntityType Name="UserPoint">
@@ -2358,6 +2663,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="UserPointSettingID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Point" Type="Int32" Nullable="false" />
+          <Property Name="IsChatEnabled" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="UserPoints" Relationship="ReviewAppsModel.FK_UserPoint_UserPointSetting" FromRole="UserPointSetting" ToRole="UserPoint" />
         </EntityType>
         <Association Name="FK_AdvComment_User">
@@ -2480,6 +2786,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RelatedApp_App2">
+          <End Type="ReviewAppsModel.App" Role="App" Multiplicity="1" />
+          <End Type="ReviewAppsModel.RelatedApp" Role="RelatedApp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="App">
+              <PropertyRef Name="AppID" />
+            </Principal>
+            <Dependent Role="RelatedApp">
+              <PropertyRef Name="AppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Review_App">
           <End Type="ReviewAppsModel.App" Role="App" Multiplicity="1" />
           <End Type="ReviewAppsModel.Review" Role="Review" Multiplicity="*" />
@@ -2488,6 +2806,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               <PropertyRef Name="AppID" />
             </Principal>
             <Dependent Role="Review">
+              <PropertyRef Name="AppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SearchedAppsFound_App">
+          <End Type="ReviewAppsModel.App" Role="App" Multiplicity="1" />
+          <End Type="ReviewAppsModel.SearchedAppsFound" Role="SearchedAppsFound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="App">
+              <PropertyRef Name="AppID" />
+            </Principal>
+            <Dependent Role="SearchedAppsFound">
               <PropertyRef Name="AppID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2600,6 +2930,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SearchedBlogArticleFound_Blog">
+          <End Type="ReviewAppsModel.Blog" Role="Blog" Multiplicity="1" />
+          <End Type="ReviewAppsModel.SearchedBlogArticleFound" Role="SearchedBlogArticleFound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogID" />
+            </Principal>
+            <Dependent Role="SearchedBlogArticleFound">
+              <PropertyRef Name="BlogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TagBlogRelation_Blog">
           <End Type="ReviewAppsModel.Blog" Role="Blog" Multiplicity="1" />
           <End Type="ReviewAppsModel.TagBlogRelation" Role="TagBlogRelation" Multiplicity="*" />
@@ -2633,6 +2975,54 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="CellPhone">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chat_ChatType">
+          <End Type="ReviewAppsModel.ChatType" Role="ChatType" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Chat" Role="Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChatType">
+              <PropertyRef Name="ChatTypeID" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="ChatTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chat_RelatedIDType">
+          <End Type="ReviewAppsModel.RelatedIDType" Role="RelatedIDType" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Chat" Role="Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelatedIDType">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chat_User">
+          <End Type="ReviewAppsModel.User" Role="User" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Chat" Role="Chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Chat">
+              <PropertyRef Name="UserID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChatConversation_Chat">
+          <End Type="ReviewAppsModel.Chat" Role="Chat" Multiplicity="1" />
+          <End Type="ReviewAppsModel.ChatConversation" Role="ChatConversation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chat">
+              <PropertyRef Name="ChatID" />
+            </Principal>
+            <Dependent Role="ChatConversation">
+              <PropertyRef Name="ChatID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2780,6 +3170,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Notification_RelatedIDType">
+          <End Type="ReviewAppsModel.RelatedIDType" Role="RelatedIDType" Multiplicity="1" />
+          <End Type="ReviewAppsModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelatedIDType">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LatestSeenNotification_User">
           <End Type="ReviewAppsModel.User" Role="User" Multiplicity="1" />
           <End Type="ReviewAppsModel.NotificationLatest" Role="NotificationLatest" Multiplicity="*" />
@@ -2813,6 +3215,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="Payment">
               <PropertyRef Name="PaymentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLatestUpdates_RelatedIDType">
+          <End Type="ReviewAppsModel.RelatedIDType" Role="RelatedIDType" Multiplicity="1" />
+          <End Type="ReviewAppsModel.UserLatestUpdate" Role="UserLatestUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelatedIDType">
+              <PropertyRef Name="RelatedIDTypeID" />
+            </Principal>
+            <Dependent Role="UserLatestUpdate">
+              <PropertyRef Name="RelatedIDTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2861,6 +3275,30 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="ReviewLikeDislike">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SearchedAppsFound_SearchIndex">
+          <End Type="ReviewAppsModel.SearchIndex" Role="SearchIndex" Multiplicity="1" />
+          <End Type="ReviewAppsModel.SearchedAppsFound" Role="SearchedAppsFound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SearchIndex">
+              <PropertyRef Name="SearchIndexID" />
+            </Principal>
+            <Dependent Role="SearchedAppsFound">
+              <PropertyRef Name="SearchIndexID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SearchedBlogArticleFound_SearchIndex">
+          <End Type="ReviewAppsModel.SearchIndex" Role="SearchIndex" Multiplicity="1" />
+          <End Type="ReviewAppsModel.SearchedBlogArticleFound" Role="SearchedBlogArticleFound" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SearchIndex">
+              <PropertyRef Name="SearchIndexID" />
+            </Principal>
+            <Dependent Role="SearchedBlogArticleFound">
+              <PropertyRef Name="SearchIndexID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2924,61 +3362,17 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="RelatedApp">
-          <End Type="ReviewAppsModel.App" Role="App" Multiplicity="*" />
-          <End Type="ReviewAppsModel.App" Role="App1" Multiplicity="*" />
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ReviewAppsModelStoreContainer" CdmEntityContainer="ReviewAppsEntities">
-          <FunctionImportMapping FunctionImportName="AppsSearch" FunctionName="ReviewAppsModel.Store.AppsSearch">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ReviewAppsModel.AppsSearch_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ResetAppDrafts" FunctionName="ReviewAppsModel.Store.ResetAppDrafts" />
           <FunctionImportMapping FunctionImportName="ResetApps" FunctionName="ReviewAppsModel.Store.ResetApps" />
           <FunctionImportMapping FunctionImportName="ResetAppsAndUsers" FunctionName="ReviewAppsModel.Store.ResetAppsAndUsers" />
           <FunctionImportMapping FunctionImportName="ResetReviews" FunctionName="ReviewAppsModel.Store.ResetReviews" />
           <FunctionImportMapping FunctionImportName="ResetWholeSystem" FunctionName="ReviewAppsModel.Store.ResetWholeSystem" />
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ReviewAppsModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ReviewAppsModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ReviewAppsModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ReviewAppsModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ReviewAppsModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ReviewAppsModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ReviewAppsModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ReviewAppsModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ReviewAppsModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="SplitString" FunctionName="ReviewAppsModel.Store.SplitString">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ReviewAppsModel.SplitString_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ResetWholeSystemX" FunctionName="ReviewAppsModel.Store.ResetWholeSystem" />
           <FunctionImportMapping FunctionImportName="GetSha2561" FunctionName="ReviewAppsModel.Store.GetSha2561" />
           <EntitySetMapping Name="AdvComments">
@@ -3055,6 +3449,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySetMapping Name="AppDetails">
             <EntityTypeMapping TypeName="ReviewAppsModel.AppDetail">
               <MappingFragment StoreEntitySet="AppDetail">
+                <ScalarProperty Name="DescriptionInHTML4" ColumnName="DescriptionInHTML4" />
                 <ScalarProperty Name="DescriptionInHTML3" ColumnName="DescriptionInHTML3" />
                 <ScalarProperty Name="DescriptionInHTML2" ColumnName="DescriptionInHTML2" />
                 <ScalarProperty Name="DescriptionInHTML1" ColumnName="DescriptionInHTML1" />
@@ -3182,6 +3577,41 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
                 <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="CellPhoneID" ColumnName="CellPhoneID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chats">
+            <EntityTypeMapping TypeName="ReviewAppsModel.Chat">
+              <MappingFragment StoreEntitySet="Chat">
+                <ScalarProperty Name="RelatedIDTypeID" ColumnName="RelatedIDTypeID" />
+                <ScalarProperty Name="ChatTypeID" ColumnName="ChatTypeID" />
+                <ScalarProperty Name="IsResolved" ColumnName="IsResolved" />
+                <ScalarProperty Name="IsSupport" ColumnName="IsSupport" />
+                <ScalarProperty Name="StartedTime" ColumnName="StartedTime" />
+                <ScalarProperty Name="UserID2" ColumnName="UserID2" />
+                <ScalarProperty Name="UserID1" ColumnName="UserID1" />
+                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatConversations">
+            <EntityTypeMapping TypeName="ReviewAppsModel.ChatConversation">
+              <MappingFragment StoreEntitySet="ChatConversation">
+                <ScalarProperty Name="IsDelivered" ColumnName="IsDelivered" />
+                <ScalarProperty Name="Message2" ColumnName="Message2" />
+                <ScalarProperty Name="Message1" ColumnName="Message1" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="IsUser1Sending" ColumnName="IsUser1Sending" />
+                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+                <ScalarProperty Name="ChatConversationID" ColumnName="ChatConversationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatTypes">
+            <EntityTypeMapping TypeName="ReviewAppsModel.ChatType">
+              <MappingFragment StoreEntitySet="ChatType">
+                <ScalarProperty Name="ChatTypeName" ColumnName="ChatTypeName" />
+                <ScalarProperty Name="ChatTypeID" ColumnName="ChatTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3316,6 +3746,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="ReviewAppsModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="RelatedIDTypeID" ColumnName="RelatedIDTypeID" />
                 <ScalarProperty Name="IsSeen" ColumnName="IsSeen" />
                 <ScalarProperty Name="IsGeneratedFromSystem" ColumnName="IsGeneratedFromSystem" />
                 <ScalarProperty Name="FromUserID" ColumnName="FromUserID" />
@@ -3392,6 +3823,22 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RelatedApps">
+            <EntityTypeMapping TypeName="ReviewAppsModel.RelatedApp">
+              <MappingFragment StoreEntitySet="RelatedApp">
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="RelatedAppID" ColumnName="RelatedAppID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RelatedIDTypes">
+            <EntityTypeMapping TypeName="ReviewAppsModel.RelatedIDType">
+              <MappingFragment StoreEntitySet="RelatedIDType">
+                <ScalarProperty Name="RelatedIDTypeName" ColumnName="RelatedIDTypeName" />
+                <ScalarProperty Name="RelatedIDTypeID" ColumnName="RelatedIDTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Reviews">
             <EntityTypeMapping TypeName="ReviewAppsModel.Review">
               <MappingFragment StoreEntitySet="Review">
@@ -3425,6 +3872,34 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SearchedAppsFounds">
+            <EntityTypeMapping TypeName="ReviewAppsModel.SearchedAppsFound">
+              <MappingFragment StoreEntitySet="SearchedAppsFound">
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="SearchIndexID" ColumnName="SearchIndexID" />
+                <ScalarProperty Name="SearchedAppsFoundID" ColumnName="SearchedAppsFoundID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SearchedBlogArticleFounds">
+            <EntityTypeMapping TypeName="ReviewAppsModel.SearchedBlogArticleFound">
+              <MappingFragment StoreEntitySet="SearchedBlogArticleFound">
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+                <ScalarProperty Name="SearchIndexID" ColumnName="SearchIndexID" />
+                <ScalarProperty Name="SearchedBlogArticleFoundID" ColumnName="SearchedBlogArticleFoundID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SearchIndexes">
+            <EntityTypeMapping TypeName="ReviewAppsModel.SearchIndex">
+              <MappingFragment StoreEntitySet="SearchIndex">
+                <ScalarProperty Name="AvailableAppsCount" ColumnName="AvailableAppsCount" />
+                <ScalarProperty Name="SearchedAt" ColumnName="SearchedAt" />
+                <ScalarProperty Name="SearchText" ColumnName="SearchText" />
+                <ScalarProperty Name="SearchIndexID" ColumnName="SearchIndexID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Subscribes">
             <EntityTypeMapping TypeName="ReviewAppsModel.Subscribe">
               <MappingFragment StoreEntitySet="Subscribe">
@@ -3436,17 +3911,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
                 <ScalarProperty Name="SubscribedToUserID" ColumnName="SubscribedToUserID" />
                 <ScalarProperty Name="SubscribedByUserID" ColumnName="SubscribedByUserID" />
                 <ScalarProperty Name="SubscribeID" ColumnName="SubscribeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ReviewAppsModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3516,6 +3980,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySetMapping Name="UserLatestUpdates">
             <EntityTypeMapping TypeName="ReviewAppsModel.UserLatestUpdate">
               <MappingFragment StoreEntitySet="UserLatestUpdates">
+                <ScalarProperty Name="RelatedIDTypeID" ColumnName="RelatedIDTypeID" />
                 <ScalarProperty Name="ByUserID" ColumnName="ByUserID" />
                 <ScalarProperty Name="AddedAt" ColumnName="AddedAt" />
                 <ScalarProperty Name="IsSendToSubscriber" ColumnName="IsSendToSubscriber" />
@@ -3539,20 +4004,13 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySetMapping Name="UserPointSettings">
             <EntityTypeMapping TypeName="ReviewAppsModel.UserPointSetting">
               <MappingFragment StoreEntitySet="UserPointSetting">
+                <ScalarProperty Name="IsChatEnabled" ColumnName="IsChatEnabled" />
                 <ScalarProperty Name="Point" ColumnName="Point" />
                 <ScalarProperty Name="TaskName" ColumnName="TaskName" />
                 <ScalarProperty Name="UserPointSettingID" ColumnName="UserPointSettingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="RelatedApp" TypeName="ReviewAppsModel.RelatedApp" StoreEntitySet="RelatedApp">
-            <EndProperty Name="App1">
-              <ScalarProperty Name="AppID" ColumnName="RelatedAppID" />
-            </EndProperty>
-            <EndProperty Name="App">
-              <ScalarProperty Name="AppID" ColumnName="AppID" />
-            </EndProperty>
-          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

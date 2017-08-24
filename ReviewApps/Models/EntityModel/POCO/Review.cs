@@ -6,6 +6,7 @@ namespace ReviewApps.Models.EntityModel {
 
     public partial class Review {
         public Review() {
+            this.Review1 = new HashSet<Review>();
             this.ReviewLikeDislikes = new HashSet<ReviewLikeDislike>();
         }
 
@@ -53,8 +54,11 @@ namespace ReviewApps.Models.EntityModel {
         public byte Rating { get; set; }
 
         public DateTime CreatedDate { get; set; }
+        public Nullable<long> ParentReviewID { get; set; }
 
         public virtual App App { get; set; }
+        public virtual ICollection<Review> Review1 { get; set; }
+        public virtual Review Review2 { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<ReviewLikeDislike> ReviewLikeDislikes { get; set; }
     }

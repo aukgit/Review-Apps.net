@@ -12,14 +12,14 @@ namespace ReviewApps.Models.EntityModel
     using System;
     using System.Collections.Generic;
     
-    public partial class LatestSeenNotification
+    public partial class BlogFile
     {
-        public long LatestSeenNotificationID { get; set; }
-        public long UserID { get; set; }
-        public byte NotificationTypeID { get; set; }
-        public string Message { get; set; }
-        public System.DateTime Dated { get; set; }
+        public System.Guid BlogFilesID { get; set; }
+        public long BlogID { get; set; }
+        public Nullable<System.Guid> GalleryID { get; set; }
+        public bool IsLink { get; set; }
+        public string Link { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual Blog Blog { get; set; }
     }
 }

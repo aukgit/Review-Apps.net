@@ -4,19 +4,23 @@ using ReviewApps.Helpers;
 
 namespace ReviewApps.Models.EntityModel {
     public class User : IDevUser {
-        public User() {
-            Apps = new HashSet<App>();
-            CellPhones = new HashSet<CellPhone>();
-            FeaturedImages = new HashSet<FeaturedImage>();
-            LatestSeenNotifications = new HashSet<LatestSeenNotification>();
-            Messages = new HashSet<Message>();
-            Messages1 = new HashSet<Message>();
-            MessageSeens = new HashSet<MessageSeen>();
-            MessageSeens1 = new HashSet<MessageSeen>();
-            Reports = new HashSet<Report>();
-            Reviews = new HashSet<Review>();
-            ReviewLikeDislikes = new HashSet<ReviewLikeDislike>();
-            UserPoints = new HashSet<UserPoint>();
+        public User()
+        {
+            this.AdvComments = new HashSet<AdvComment>();
+            this.Apps = new HashSet<App>();
+            this.Blogs = new HashSet<Blog>();
+            this.CellPhones = new HashSet<CellPhone>();
+            this.Chats = new HashSet<Chat>();
+            this.FeaturedImages = new HashSet<FeaturedImage>();
+            this.Messages = new HashSet<Message>();
+            this.Messages1 = new HashSet<Message>();
+            this.MessageSeens = new HashSet<MessageSeen>();
+            this.MessageSeens1 = new HashSet<MessageSeen>();
+            this.NotificationLatests = new HashSet<NotificationLatest>();
+            this.Reviews = new HashSet<Review>();
+            this.ReviewLikeDislikes = new HashSet<ReviewLikeDislike>();
+            this.UserLatestUpdates = new HashSet<UserLatestUpdate>();
+            this.UserPoints = new HashSet<UserPoint>();
         }
 
         public long UserID { get; set; }
@@ -26,17 +30,22 @@ namespace ReviewApps.Models.EntityModel {
         public string UserName { get; set; }
 
         public long TotalEarnedPoints { get; set; }
+        public bool IsProfileSet { get; set; }
+        public virtual ICollection<AdvComment> AdvComments { get; set; }
         public virtual ICollection<App> Apps { get; set; }
+        public virtual ICollection<Blog> Blogs { get; set; }
         public virtual ICollection<CellPhone> CellPhones { get; set; }
+        public virtual ICollection<Chat> Chats { get; set; }
         public virtual ICollection<FeaturedImage> FeaturedImages { get; set; }
-        public virtual ICollection<LatestSeenNotification> LatestSeenNotifications { get; set; }
+
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<Message> Messages1 { get; set; }
         public virtual ICollection<MessageSeen> MessageSeens { get; set; }
         public virtual ICollection<MessageSeen> MessageSeens1 { get; set; }
-        public virtual ICollection<Report> Reports { get; set; }
+        public virtual ICollection<NotificationLatest> NotificationLatests { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<ReviewLikeDislike> ReviewLikeDislikes { get; set; }
+        public virtual ICollection<UserLatestUpdate> UserLatestUpdates { get; set; }
         public virtual ICollection<UserPoint> UserPoints { get; set; }
 
 

@@ -11,11 +11,15 @@ using ReviewApps.Models.ViewModels;
 #endregion
 
 namespace ReviewApps.Models.EntityModel {
-    public class App : AppSavingTextFields, IApp {
-        public App() {
-            FeaturedImages = new HashSet<FeaturedImage>();
-            Reviews = new HashSet<Review>();
-            TagAppRelations = new HashSet<TagAppRelation>();
+        public App()
+        {
+            this.BlogAppRelations = new HashSet<BlogAppRelation>();
+            this.FeaturedImages = new HashSet<FeaturedImage>();
+            this.Reviews = new HashSet<Review>();
+            this.TagAppRelations = new HashSet<TagAppRelation>();
+            this.UserLatestUpdates = new HashSet<UserLatestUpdate>();
+            this.App1 = new HashSet<App>();
+            this.Apps = new HashSet<App>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -86,12 +90,22 @@ namespace ReviewApps.Models.EntityModel {
 
         [StringLength(70)]
         public string UrlWithoutEscapseSequence { get; set; }
-
+        public bool IsDetailPresent { get; set; }
+        public Nullable<System.DateTime> PublishAt { get; set; }
+        public bool IsPublishAtScheduledTime { get; set; }
+        public byte[] SHA256 { get; set; }
+        public Nullable<decimal> PriceInUSD { get; set; }
+        public byte AppPricingCategoryID { get; set; }
+    
+        public virtual AppPricingCategory AppPricingCategory { get; set; }
+		
         public virtual Category Category { get; set; }
         public virtual ICollection<FeaturedImage> FeaturedImages { get; set; }
         public virtual Platform Platform { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<RelatedApp> RelatedApps { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<SearchedAppsFound> SearchedAppsFounds { get; set; }
         public virtual ICollection<TagAppRelation> TagAppRelations { get; set; }
 
 
@@ -211,6 +225,14 @@ namespace ReviewApps.Models.EntityModel {
         /// otherwise update it from the partial controller
         /// </summary>
         public int? ReviewDisplayingCount { get; set; }
+		
+		
+    	public virtual ICollection<BlogAppRelation> BlogAppRelations { get; set; }
+		public virtual AppDetail AppDetail { get; set; }
+		public virtual ICollection<App> Apps { get; set; }
+        public virtual ICollection<App> App1 { get; set; }
+		public virtual ICollection<UserLatestUpdate> UserLatestUpdates { get; set; }
+		
         #endregion
     }
 }

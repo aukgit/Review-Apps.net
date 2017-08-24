@@ -19,7 +19,8 @@ namespace ReviewApps.Models.EntityModel {
         public byte UserPointSettingID { get; set; }
         public string TaskName { get; set; }
         public int Point { get; set; }
-
+        public bool IsChatEnabled { get; set; }
+    
         public virtual ICollection<UserPoint> UserPoints { get; set; }
     }
 }

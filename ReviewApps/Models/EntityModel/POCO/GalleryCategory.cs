@@ -21,18 +21,22 @@ namespace ReviewApps.Models.EntityModel
         public GalleryCategory()
         {
             this.Galleries = new HashSet<Gallery>();
+            this.UploadFileDrafts = new HashSet<UploadFileDraft>();
         }
     
         public int GalleryCategoryID { get; set; }
         [Display(Name = "Category")]
         public string CategoryName { get; set; }
+		[Display(Description = "1024x768, here 1024 is width.")]
+        public double Width { get; set; }
+		
         [Display( Description = "1024x768, here 768 is height.")]
         public double Height { get; set; }
-        [Display(Description = "1024x768, here 1024 is width.")]
-        public double Width { get; set; }
+        
         [Display(Name="Related to advertise module")]
         public bool IsAdvertise { get; set; }
     
         public virtual ICollection<Gallery> Galleries { get; set; }
+        public virtual ICollection<UploadFileDraft> UploadFileDrafts { get; set; }
     }
 }

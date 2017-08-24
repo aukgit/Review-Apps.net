@@ -7,20 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReviewApps.Models.EntityModel {
+namespace ReviewApps.Models.EntityModel
+{
     using System;
     using System.Collections.Generic;
-
-    public partial class Report {
-        public long ReportID { get; set; }
-        public long AppID { get; set; }
+    
+    public partial class ReviewLikeDislike
+    {
+        public long ReviewLikeDislikeID { get; set; }
+        public long ReviewID { get; set; }
         public long UserID { get; set; }
-        public bool IsFalseReport { get; set; }
-        public bool IsChecked { get; set; }
-        public string ActionTakenMessageToSender { get; set; }
-        public string ActionTakenMessageToHolder { get; set; }
-
-        public virtual App App { get; set; }
+        public bool IsLiked { get; set; }
+        public bool IsDisliked { get; set; }
+        public bool IsNone { get; set; }
+    
+        public virtual Review Review { get; set; }
         public virtual User User { get; set; }
     }
 }
