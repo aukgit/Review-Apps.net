@@ -23,6 +23,7 @@ namespace ReviewApps.Models.EntityModel
         public string TypeName { get; set; }
         public bool IsGood { get; set; }
         public string DefaultMessage { get; set; }
+        public string LabelColor { get; set; }
     
         public virtual ICollection<Notification> Notifications { get; set; }
     }

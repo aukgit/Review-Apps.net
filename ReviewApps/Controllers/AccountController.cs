@@ -21,6 +21,7 @@ using ReviewApps.Modules.Role;
 using ReviewApps.Modules.Session;
 using ReviewApps.Modules.Validations;
 using ReviewApps.Modules.Extensions.IdentityExtension;
+using ReviewApps.Modules.Filters;
 
 #endregion
 

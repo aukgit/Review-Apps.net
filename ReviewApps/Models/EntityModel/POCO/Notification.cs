@@ -19,7 +19,12 @@ namespace ReviewApps.Models.EntityModel
         public byte NotificationTypeID { get; set; }
         public string Message { get; set; }
         public System.DateTime Dated { get; set; }
+        public long? FromUserID { get; set; }
+        public bool IsGeneratedFromSystem { get; set; }
+        public bool IsSeen { get; set; }
+        public byte RelatedIDTypeID { get; set; }
     
         public virtual NotificationType NotificationType { get; set; }
+        public virtual RelatedIDType RelatedIDType { get; set; }
     }
 }

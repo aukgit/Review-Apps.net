@@ -7,6 +7,10 @@ namespace ReviewApps {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("elmah");
 
+
+            //AreaRegistration.RegisterAllAreas();
+
+
             #region Login, Register, Authentication Additional Routes
 
             const string reviewappsControllers = "ReviewApps.Controllers";
@@ -208,7 +212,11 @@ namespace ReviewApps {
                    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                    namespaces: new string[] { reviewappsControllers }
             );
+
             #endregion
+
+
+
         }
     }
 }

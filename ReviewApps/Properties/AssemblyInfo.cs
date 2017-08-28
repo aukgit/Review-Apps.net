@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("We Review App")]
+[assembly: AssemblyTitle("reviews-apps.net")]
 [assembly: AssemblyDescription("Mobile Application Review Application.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Developers Organism")]
-[assembly: AssemblyProduct("WeReviewApp")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("reviews-apps.net")]
+[assembly: AssemblyProduct("reviews-apps.net")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("Md. Alim Ul Karim")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.3.5.0")]
-[assembly: AssemblyFileVersion("1.3.5.0")]
+[assembly: AssemblyVersion("2.3.5.0")]
+[assembly: AssemblyFileVersion("2.3.5.0")]

@@ -25,9 +25,10 @@ namespace ReviewApps.Models.EntityModel
         public bool IsDraft { get; set; }
         public System.DateTime LastModified { get; set; }
         public System.DateTime SentDate { get; set; }
-
         public Nullable<System.DateTime> ReceivedDate { get; set; }
         public bool IsReceived { get; set; }
+        public bool IsFlaged { get; set; }
+        public bool IsReviewed { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

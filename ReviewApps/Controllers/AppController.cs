@@ -24,6 +24,7 @@ using ReviewApps.Modules.Session;
 using ReviewApps.Modules.Uploads;
 using ReviewApps.Models.EntityModel.ExtenededWithCustomMethods;
 using ReviewApps.Modules.Extensions.IdentityExtension;
+using ReviewApps.Modules.Filters;
 using ReviewApps.Modules.Mail;
 using FileSys = System.IO.File;
 
@@ -36,6 +37,7 @@ namespace ReviewApps.Controllers {
     [Authorize]
     [ValidateRegistrationComplete]
     [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
+    [GzipCompress]
     public class AppController : AdvanceController {
         #region Declaration
 

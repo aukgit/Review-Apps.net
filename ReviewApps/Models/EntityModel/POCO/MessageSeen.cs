@@ -26,6 +26,9 @@ namespace ReviewApps.Models.EntityModel
         public System.DateTime LastModified { get; set; }
         public System.DateTime SentDate { get; set; }
         public System.DateTime ReceivedDate { get; set; }
+        public string MessageIcon { get; set; }
+        public bool IsReviewed { get; set; }
+        public bool IsFlaged { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

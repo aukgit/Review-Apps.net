@@ -9,10 +9,12 @@ using DevMvcComponent.EntityConversion;
 using ReviewApps.Models.POCO.IdentityCustomization;
 using ReviewApps.Models.POCO.Structs;
 using ReviewApps.Modules.DevUser;
+using ReviewApps.Modules.Filters;
 
 #endregion
 
 namespace ReviewApps.Controllers {
+    [GzipCompress]
     public class HomeController : BasicController {
         public HomeController()
             : base(true) {

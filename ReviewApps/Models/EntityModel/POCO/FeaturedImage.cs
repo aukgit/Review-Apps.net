@@ -11,7 +11,7 @@ namespace ReviewApps.Models.EntityModel
 {
     using System;
     using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations;
     
     public partial class FeaturedImage
     {

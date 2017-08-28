@@ -17,11 +17,13 @@ namespace ReviewApps.Models.EntityModel
         public Tag()
         {
             this.TagAppRelations = new HashSet<TagAppRelation>();
+            this.TagBlogRelations = new HashSet<TagBlogRelation>();
         }
     
         public long TagID { get; set; }
         public string TagDisplay { get; set; }
     
         public virtual ICollection<TagAppRelation> TagAppRelations { get; set; }
+        public virtual ICollection<TagBlogRelation> TagBlogRelations { get; set; }
     }
 }
