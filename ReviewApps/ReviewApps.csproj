@@ -25,6 +25,7 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1601,6 +1602,28 @@
     <Folder Include="App_Data\DataCached\Suggested\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Services\" />
+    <Folder Include="Content\published\" />
+    <Folder Include="Content\source-css\0\" />
+    <Folder Include="Content\source-css\1\" />
+    <Folder Include="Content\source-css\2\" />
+    <Folder Include="Content\source-css\3\" />
+    <Folder Include="Content\source-css\less\0\" />
+    <Folder Include="Content\source-css\less\1\" />
+    <Folder Include="Content\source-css\less\2\" />
+    <Folder Include="Content\source-css\less\3\" />
+    <Folder Include="Content\source-css\less\mixens\" />
+    <Folder Include="Content\source-css\vendor\0\" />
+    <Folder Include="Content\source-css\vendor\1\" />
+    <Folder Include="Content\source-css\vendor\2\" />
+    <Folder Include="Content\source-css\vendor\3\" />
+    <Folder Include="Content\source-js\0\" />
+    <Folder Include="Content\source-js\1\" />
+    <Folder Include="Content\source-js\2\" />
+    <Folder Include="Content\source-js\3\" />
+    <Folder Include="Content\source-js\vendor\0\" />
+    <Folder Include="Content\source-js\vendor\1\" />
+    <Folder Include="Content\source-js\vendor\2\" />
+    <Folder Include="Content\source-js\vendor\3\" />
     <Folder Include="Models\DesignPattern\Abstracts\" />
     <Folder Include="Models\EntityModel\GarbageCodes\" />
     <Folder Include="Models\POCO\AdditionalDatabase\" />
