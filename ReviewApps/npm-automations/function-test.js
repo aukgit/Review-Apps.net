@@ -2,7 +2,7 @@ var fs = require('fs');
 
 var folderNames = {
     source: {
-        css: "../ReviewApps/Content/source-css",
+        css: "../Content/source-css",
         less: "../Content/source-css/less",
         js: "../Content/source-js/",
     },
